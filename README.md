@@ -81,19 +81,28 @@ unpack it and run `gemini extensions install <unpacked folder>`.
 
 ## ChatGPT and Codex
 
-`kaldrix-chatgpt.zip` is the OpenAI plugin package. It is not a ChatGPT upload file
-for everyone: ChatGPT users will add Kaldrix from the ChatGPT plugin directory
-after OpenAI approves it.
+### ChatGPT (web)
 
-Until then, on your own computer with the ChatGPT desktop app or Codex:
+You need ChatGPT Plus, Pro, Business, Enterprise or Edu. In Business workspaces
+only admins and owners can turn on developer mode; in Enterprise and Edu an admin can allow it for you.
+
+1. Download [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip).
+2. In ChatGPT on the web open **Settings** and turn on **Developer mode**.
+3. Open **Plugins**, select **Add** → **Upload plugin archive** and choose `kaldrix-chatgpt.zip`.
+4. When ChatGPT asks for the MCP server, enter `https://api.kaldrix.pl/mcp`
+   and sign in to Kaldrix in the window that opens. Pick your company if you have more than one.
+5. Install Kaldrix from your plugins and ask, for example, *"Show my Kaldrix projects"*.
+
+The uploaded plugin is visible only to you. A workspace admin or owner can publish it
+to the workspace. To update, upload the newest `kaldrix-chatgpt.zip` again.
+After OpenAI approves Kaldrix, you will also find it in the ChatGPT plugin directory.
+
+### Codex
 
 1. Unpack `kaldrix-chatgpt.zip` into `~/.codex/plugins/kaldrixprod`.
 2. Add an entry for that folder to your personal marketplace `~/.agents/plugins/marketplace.json`,
    as described in [OpenAI: build plugins](https://developers.openai.com/plugins/build/plugins).
-3. Restart the ChatGPT desktop app, install Kaldrix from the plugin list and sign in to Kaldrix when asked.
-
-A ChatGPT workspace admin can then share the local plugin with the workspace
-(ChatGPT Plugins → Personal → ⋯ → Publish). This does not list it in the public directory.
+3. Restart Codex, install Kaldrix from the plugin list and sign in to Kaldrix when asked.
 
 ## Where your data goes
 
@@ -168,18 +177,28 @@ rozpakuj go i wpisz `gemini extensions install <rozpakowany folder>`.
 
 ## ChatGPT i Codex
 
-`kaldrix-chatgpt.zip` to paczka pluginu OpenAI. Nie wgrywa się jej w zwykłym ChatGPT:
-użytkownicy ChatGPT dodadzą Kaldrix z katalogu pluginów ChatGPT, gdy OpenAI go zatwierdzi.
+### ChatGPT (w przeglądarce)
 
-Do tego czasu na własnym komputerze z aplikacją ChatGPT lub Codex:
+Potrzebujesz ChatGPT Plus, Pro, Business, Enterprise albo Edu. W przestrzeni Business
+tryb dewelopera włączają tylko administratorzy i właściciele; w Enterprise i Edu administrator może go Tobie udostępnić.
+
+1. Pobierz [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip).
+2. W ChatGPT w przeglądarce otwórz **Settings** i włącz **Developer mode**.
+3. Otwórz **Plugins**, wybierz **Add** → **Upload plugin archive** i wskaż `kaldrix-chatgpt.zip`.
+4. Gdy ChatGPT zapyta o serwer MCP, wpisz `https://api.kaldrix.pl/mcp`
+   i zaloguj się do Kaldrix w otwartym oknie. Jeśli masz kilka firm, wybierz właściwą.
+5. Zainstaluj Kaldrix ze swoich pluginów i poproś na przykład: *„Pokaż moje projekty w Kaldrix”*.
+
+Wgrany plugin widzisz tylko Ty. Administrator lub właściciel przestrzeni roboczej może
+go opublikować dla całej przestrzeni. Aby zaktualizować, wgraj ponownie najnowszy `kaldrix-chatgpt.zip`.
+Po zatwierdzeniu przez OpenAI Kaldrix będzie też w katalogu pluginów ChatGPT.
+
+### Codex
 
 1. Rozpakuj `kaldrix-chatgpt.zip` do folderu `~/.codex/plugins/kaldrixprod`.
 2. Dodaj ten folder do osobistej listy pluginów `~/.agents/plugins/marketplace.json`,
    tak jak opisuje [instrukcja OpenAI](https://developers.openai.com/plugins/build/plugins).
-3. Uruchom ponownie aplikację ChatGPT, zainstaluj Kaldrix z listy pluginów i zaloguj się do Kaldrix.
-
-Administrator przestrzeni roboczej ChatGPT może potem udostępnić plugin całej przestrzeni
-(ChatGPT Plugins → Personal → ⋯ → Publish). Nie trafia on wtedy do publicznego katalogu.
+3. Uruchom ponownie Codex, zainstaluj Kaldrix z listy pluginów i zaloguj się do Kaldrix.
 
 **Dokąd trafiają dane:** wszystkie odczyty i zmiany danych idą do serwera MCP Kaldrix
 (`https://api.kaldrix.pl/mcp`). Duże pliki (dokumenty, tekstury, modele 3D) asystent wysyła
