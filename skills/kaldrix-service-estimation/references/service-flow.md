@@ -1,0 +1,37 @@
+# Service flow: topic index
+
+Choose only the topic needed for the current task. These fragments are the source
+of the complete server guide; do not read them all before a routine operation.
+Use live tool schemas and backend decisions for the actual operation.
+
+- [Simple Estimation Flow for Agents](service-flow-00-simple-estimation-flow-for-agents.md)
+- [Five Documents](service-flow-01-five-documents.md)
+- [Catalog Availability](service-flow-02-catalog-availability.md)
+- [Client house quote in short](service-flow-03-client-house-quote-in-short.md)
+- [Building Scope](service-flow-04-building-scope.md)
+- [Catalog Currency](service-flow-05-catalog-currency.md)
+- [Exported and shared amounts](service-flow-06-exported-and-shared-amounts.md)
+- [Catalog Flow](service-flow-07-catalog-flow.md)
+- [A simple price per unit](service-flow-08-a-simple-price-per-unit.md)
+- [Quantity mapping](service-flow-09-quantity-mapping.md)
+- [Units and packages](service-flow-10-units-and-packages.md)
+- [Recommended order for an estimate built from the BIM model](service-flow-11-recommended-order-for-an-estimate-built-from-the-bim-model.md)
+- [Manual vs model quantities](service-flow-12-manual-vs-model-quantities.md)
+- [Project Estimate Flow (full catalog tools)](service-flow-13-project-estimate-flow-full-catalog-tools.md)
+- [Estimate without double counting (playbook)](service-flow-14-estimate-without-double-counting-playbook.md)
+- [Estimate sections](service-flow-15-estimate-sections.md)
+- [Estimate PDF](service-flow-16-estimate-pdf.md)
+- [Manual item and budget previews](service-flow-17-manual-item-and-budget-previews.md)
+- [Totals](service-flow-18-totals.md)
+- [VAT rate of positions](service-flow-19-vat-rate-of-positions.md)
+- [Primary Estimate](service-flow-20-primary-estimate.md)
+- [Estimate vs Invoices](service-flow-21-estimate-vs-invoices.md)
+- [Available MCP Tools](service-flow-22-available-mcp-tools.md)
+- [Guardrails](service-flow-23-guardrails.md)
+- [Current MCP boundary](service-flow-24-current-mcp-boundary.md)
+- [Scope proposals before adding a line](service-flow-25-scope-proposals-before-adding-a-line.md)
+- [Quantity form and ready scopes](service-flow-26-quantity-form-and-ready-scopes.md)
+- [Offer workflow metadata](service-flow-27-offer-workflow-metadata.md)
+- [Edit the estimate sheet safely](service-flow-28-edit-the-estimate-sheet-safely.md)
+- [Model reports for a building or the whole project](service-flow-29-model-reports-for-a-building-or-the-whole-project.md)
+- [The estimate follows the model](service-flow-30-estimate-follows-the-model.md)

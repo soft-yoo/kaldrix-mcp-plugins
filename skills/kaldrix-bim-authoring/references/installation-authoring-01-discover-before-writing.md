@@ -1,0 +1,13 @@
+## Discover before writing
+
+Circuit, riser and planning tools require INSTALLATION_DESIGN; simple points use INSTALLATIONS.
+Check [plan and module access](plan-and-module-access.md) before choosing this workflow.
+
+1. Read `get_project_detail` and call `plan_floor_installations(projectId, floorId, expectedModelVersion)` for one snapshot of all six trade guides. Set `systems` to plan only selected trades. An unconfigured trade is optional: do not add gas or another installation unless it is in the requested scope. Follow SOURCE → POINTS → CONNECT and replan after saving. Read `get_floor_detail`, `list_installation_points`, `list_installation_circuits` and `list_installation_risers`. Reuse existing equipment and endpoints.
+2. Read `kaldrix://projects/installation-point-kinds` for every supported component, its trade, mount and height. Use `add_installation_points` for individual equipment or endpoints; presets are only typical room sets and do not include every kind.
+3. Call `get_installation_conduit_catalog`. Its media, compatible specs, source/target restrictions, source-dependent defaults, routing bounds and 3D capabilities are authoritative. Do not guess compatibility from names. `targetKinds=null` means general trade validation, not permission to mix trades.
+4. Call `get_installation_circuit_selection` with the current expectedModelVersion and medium. Select real source/target IDs from its result. Filter eligible targets by room membership for one or several rooms on the same floor. Typical targets are suggestions; explicit eligible choices remain possible.
+5. For automatic grouping, use `suggest_installation_circuits` then `apply_installation_circuit_suggestions` with the exact reviewed modelVersion, system and language. The language controls generated names in both the preview and saved circuits (pl by default); use the intended language of the project. For chosen connections, use `create_installation_circuit` with explicit sourcePointId and pointIds and the selection's modelVersion.
+6. Inspect `get_installation_circuit_layout`, `validate_floor_geometry` and trade-specific reports. A saved circuit with warnings is not proof of a completed installation. Report missing sources, unreachable points, crossings and unconnected endpoints.
+
+After each write use the returned actual IDs and new modelVersion. MODEL_VERSION_CONFLICT requires a fresh read and review; never substitute a newer version into a previously reviewed proposal. In the JSON below, replace every `<...>` placeholder with IDs or version numbers from real reads; the snippets illustrate tool arguments, not executable UUIDs.
