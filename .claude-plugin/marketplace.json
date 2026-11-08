@@ -1,6 +1,6 @@
 {
   "name": "kaldrix",
-  "description": "Kaldrix plugin for construction projects, schedules and cost estimates.",
+  "description": "Kaldrix for construction companies: building models, cost estimates, offers, contracts, schedules and invoices.",
   "owner": {
     "name": "Soft-Yoo Piotr Kosmala"
   },
@@ -8,14 +8,14 @@
     {
       "name": "kaldrixprod",
       "displayName": "Kaldrix",
-      "description": "Work with Kaldrix construction projects, schedules and cost estimates using your connected account.",
-      "version": "1.0.12",
+      "description": "Model buildings in 2D and 3D, price them from your own price lists, and run offers, contracts, schedules, site logs and invoices for your construction projects in Kaldrix.",
+      "version": "1.0.14",
       "homepage": "https://kaldrix.pl/integracje.html",
       "license": "MIT",
       "source": {
         "source": "archive",
-        "url": "https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/download/v1.0.12/kaldrix-claude.zip",
-        "sha256": "4dbb0324ebf62d777777fbb4e72dbb710594915482b270d2812ed1b9c4e5efa2"
+        "url": "https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/download/v1.0.14/kaldrix-claude.zip",
+        "sha256": "1bb5eeadc879a9bc9e478b585f471ba139a1a419743f4e6629f19c53d1e121e5"
       }
     }
   ]
