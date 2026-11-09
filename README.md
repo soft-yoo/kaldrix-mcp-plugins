@@ -11,6 +11,30 @@ is always available; creating or changing data requires an active Kaldrix subscr
 
 [Polska wersja poniżej](#pluginy-kaldrix-dla-asystentów-ai).
 
+## What you can do
+
+- **Quote a house in a few steps.** Describe the building (size, storeys, walls, roof,
+  foundations). Kaldrix creates the model and a draft cost estimate from your price list.
+- **Model in 2D and 3D.** Walls, rooms, doors and windows, roofs and roof framing,
+  structures and installations. Kaldrix checks the model after every change.
+- **Review estimates before you share them.** Totals, VAT, markups and warnings;
+  service recipes and price lists.
+- **Run the project.** Offers and client remarks, contracts and annexes, the schedule,
+  the site log, acceptance and handover.
+- **Keep the office in order.** Customers, tasks, documents and received invoices.
+
+Kaldrix validates and saves every change. Deleting data, sending documents to a client
+and replacing prices need your explicit confirmation. The assistant can do only what your role
+in the company and the permissions you grant when you connect allow.
+
+## Try asking
+
+- "Find my project Kowalski house and tell me what should happen next."
+- "Prepare a quote for a 10 by 8 metre single-storey masonry house with strip footings and a gable roof."
+- "Check the cost estimate for Kowalski house and explain the warnings before I send it."
+- "Prepare a draft contract from the accepted offer. Do not send it."
+- "Record this supplier invoice and keep the attached PDF."
+
 ## Download
 
 Each [release](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases) has one package per client.
@@ -76,6 +100,8 @@ The ZIP from this repository is for Claude Code.
 3. Ask, for example, *"Show my Kaldrix projects"*.
 
 Update: `gemini extensions update kaldrixprod`. Remove: `gemini extensions uninstall kaldrixprod`.
+The repository root also includes `gemini-extension.json` and `skills/` for the
+[Gemini CLI extensions gallery](https://geminicli.com/extensions/).
 On systems other than macOS, Linux and Windows, download `kaldrix-gemini.zip`,
 unpack it and run `gemini extensions install <unpacked folder>`.
 
@@ -133,6 +159,28 @@ działa zawsze, a tworzenie i zmiana danych wymaga aktywnej subskrypcji Kaldrix.
 Najnowsze paczki pobierzesz z tabeli [Download](#download). Każdy program ma własną paczkę;
 nie można ich zamieniać.
 
+**Co możesz zrobić:**
+
+- wycenić dom w kilku krokach: podajesz wymiary, kondygnacje, ściany, dach i fundamenty,
+  a Kaldrix tworzy model i szkic kosztorysu z Twojego cennika;
+- rysować i poprawiać model 2D i 3D: ściany, pomieszczenia, okna i drzwi, dach z więźbą,
+  konstrukcje i instalacje; Kaldrix sprawdza model po każdej zmianie;
+- sprawdzić kosztorys przed wysłaniem: sumy, VAT, narzuty i ostrzeżenia, a także usługi i cenniki;
+- prowadzić budowę: oferty i uwagi klienta, umowy i aneksy, harmonogram, dziennik budowy i odbiór;
+- uporządkować biuro: klienci, zadania, dokumenty i faktury kosztowe.
+
+Kaldrix sprawdza i zapisuje każdą zmianę. Usunięcie danych, wysłanie dokumentu do klienta
+i zastąpienie cen wymagają Twojego wyraźnego potwierdzenia. Asystent może tyle, na ile pozwalają
+Twoja rola w firmie i uprawnienia nadane przy połączeniu.
+
+**Przykładowe polecenia:**
+
+- „Znajdź projekt Dom Kowalskich i powiedz, co trzeba teraz zrobić.”
+- „Przygotuj wycenę parterowego domu murowanego 10 na 8 m z ławami i dachem dwuspadowym.”
+- „Sprawdź kosztorys Domu Kowalskich i wyjaśnij ostrzeżenia, zanim go wyślę.”
+- „Przygotuj projekt umowy z zaakceptowanej oferty. Nie wysyłaj jej.”
+- „Zapisz tę fakturę od dostawcy i zachowaj załączony PDF.”
+
 ## Claude Code (terminal)
 
 1. Dodaj to repozytorium i zainstaluj plugin:
@@ -172,6 +220,8 @@ i zadziała też w Claude Code. ZIP z tego repozytorium jest dla Claude Code.
 3. Poproś na przykład: *„Pokaż moje projekty w Kaldrix”*.
 
 Aktualizacja: `gemini extensions update kaldrixprod`. Usunięcie: `gemini extensions uninstall kaldrixprod`.
+W korzeniu repozytorium znajdują się też `gemini-extension.json` i `skills/` przygotowane dla
+[galerii rozszerzeń Gemini CLI](https://geminicli.com/extensions/).
 Na systemach innych niż macOS, Linux i Windows pobierz `kaldrix-gemini.zip`,
 rozpakuj go i wpisz `gemini extensions install <rozpakowany folder>`.
 
