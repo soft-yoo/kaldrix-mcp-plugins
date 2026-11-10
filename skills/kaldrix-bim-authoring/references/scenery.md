@@ -65,11 +65,14 @@ layout, send another `seed`.
 
 Optional landscape:
 
-- `backdrop` — omitted: tree lines and distant houses 90–220 m away; `NONE`; `TREELINE`; `HILLS`
-  (1.2–1.8 km away); `MOUNTAINS` (6–8 km away). A backdrop with no model in the library is skipped.
+- `backdrop` — omitted: tree lines and distant houses, usually 90–220 m away. For large plots the ring
+  moves outward, with its inner radius at least 10 m beyond half the plot diagonal. Other choices:
+  `NONE`; `TREELINE`; `HILLS` (1.2–1.8 km away); `MOUNTAINS` (6–8 km away). A backdrop with no model in
+  the library is skipped. Every variant respects the building clear zone and kept objects.
 - `water` — `POND` (inside the plot, away from the clear zone), `RIVER` (a winding band beyond one side
-  of the plot), `SEA` (a very large area behind the plot, on the +Y side) or `NONE`. It makes one
-  `GENERATED` `WATER` area, replaced by the next generation.
+  of the plot), `SEA` (a very large area behind the plot, on the +Y side) or `NONE`. It can create one
+  `GENERATED` `WATER` area. Regeneration replaces unlocked generated areas; manual and locked areas
+  stay. If a kept `WATER` area already has the same outline and elevation, no duplicate is added.
 
 `forProjectId` sizes the clear zone from that project's building footprint plus 2 m on every side. It
 only reads the project. Refused with `PROJECT_SCENERY_NO_BUILDING` when the project has no building.
@@ -101,6 +104,11 @@ above it). Far landscape is allowed: `x`, `y` within ±10 000 m, `elevation` −
 first point; edges must not cross. A scenery holds up to `areaLimit` areas
 (`SCENERY_AREA_LIMIT_EXCEEDED` above it).
 
+For an existing area, send its `id` and `clearTexture: true` to detach the texture while keeping the
+area and its outline. A null `textureAssetId` alone does not clear it; without `clearTexture: true`,
+omitting `textureAssetId` or setting it to null keeps the saved texture.
+Detaching does not require access to the old texture, including a withdrawn catalog item.
+
 ## Scenery in a project
 
 `set_project_scenery` takes a `choice`:
@@ -125,4 +133,8 @@ the user first. `remove_scenery_objects` takes either ids (`objectIds`, `areaIds
 `GENERATED_ONLY` keeps `MANUAL` and locked objects and areas, `ALL` removes everything. `delete_scenery` is refused with `SCENERY_IN_USE` while
 a project has selected the scenery: choose another scenery in those projects first. Projects that
 showed it only as the company default are left with no scenery. A library model or texture used in a
-scenery cannot be deleted from the library until it is removed from the scenery.
+scenery cannot be deleted from the company library until it is removed from the scenery.
+
+If a catalog asset is withdrawn or its file becomes unavailable, the scenery still contains the
+object or area and its ID. Remove the chosen entry by its ID, or detach a ground area's texture with
+`save_scenery_areas` and `clearTexture: true`. A failed download alone does not prove a file was deleted.

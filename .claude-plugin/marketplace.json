@@ -9,13 +9,13 @@
       "name": "kaldrixprod",
       "displayName": "Kaldrix",
       "description": "Model buildings in 2D and 3D, price them from your own price lists, and run offers, contracts, schedules, site logs and invoices for your construction projects in Kaldrix.",
-      "version": "1.0.18",
+      "version": "1.0.19",
       "homepage": "https://kaldrix.pl/integracje.html",
       "license": "MIT",
       "source": {
         "source": "archive",
-        "url": "https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/download/v1.0.18/kaldrix-claude.zip",
-        "sha256": "3e875253e8633c55c208c190a43e17093fbf56d716c5242f017a061e6d392b92"
+        "url": "https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/download/v1.0.19/kaldrix-claude.zip",
+        "sha256": "1ba657452305612a5dc57914cf5c7b08a74b6b9f20f49202233c84fb7cb12d74"
       }
     }
   ]
