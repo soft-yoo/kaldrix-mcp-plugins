@@ -45,6 +45,7 @@ small topic fragments: read the matching fragment, not the complete collection.
 | Work on structural frames, roofs, junctions, circuits, optimization or quantities | [Structures and installations index](references/structures-and-installations.md) |
 | Name spaces or apply room templates | [Naming](references/naming-guide.md) and [room templates](references/room-templates.md) |
 | Add presentation graphics, save described 2D/3D views or prepare image references for external AI visualization | [Scene graphics](references/scene-graphics.md) |
+| Build reusable house surroundings (trees, hedge or fence, backdrop) and choose the scenery a project shows | [Scenery](references/scenery.md) |
 | Find where an input comes from or which tool comes next | [Tool order and inputs](references/tool-order-and-inputs.md) |
 
 Keep the canonical sequence project → building → outline → floors → partitions
