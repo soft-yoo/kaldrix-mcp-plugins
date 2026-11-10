@@ -1,15 +1,56 @@
 # Kaldrix plugins for AI assistants
 
-Work with your Kaldrix construction projects, schedules and cost estimates in Claude,
-Gemini CLI and ChatGPT. Every package connects to the Kaldrix MCP server
-(`https://api.kaldrix.pl/mcp`) and adds the same guided workflows: project review,
-cost estimate review, service estimation, construction workflow and building model authoring.
+[![M8ven Score](https://m8ven.ai/badge/mcp/soft-yoo-kaldrix-mcp-plugins-xzklay)](https://m8ven.ai/mcp/soft-yoo-kaldrix-mcp-plugins-xzklay?s=readme)
 
-You need a Kaldrix account. You sign in to Kaldrix when the plugin first connects;
-the packages store no passwords or tokens. The plugin is free. Reading your data
-is always available; creating or changing data requires an active Kaldrix subscription.
+[English](#kaldrix-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
 
-[Polska wersja poniżej](#pluginy-kaldrix-dla-asystentów-ai).
+Manage construction projects, prepare cost estimates and plan work in Kaldrix with your
+AI assistant. This repository provides installation packages for Claude Code, Gemini CLI,
+ChatGPT and Codex. All packages connect to the same Kaldrix service at `https://api.kaldrix.pl/mcp`.
+
+The badge above opens M8ven's current report for this package repository.
+
+## Before you start
+
+- **Create a Kaldrix account.** Sign in to Kaldrix when your assistant first connects.
+- **Choose your assistant below.** Each client has its own package and installation steps.
+- **Check your subscription.** The plugin is free. Reading your data does not require an active
+  subscription; creating or changing data requires an active Kaldrix subscription.
+
+## Enable AI connections in Kaldrix first
+
+1. Sign in to [Kaldrix](https://app.kaldrix.pl/ai) and check that you have selected the right company.
+   In **Subscription** → **Features**, check that the **AI** module is on.
+   The company owner can enable it if the plan includes AI.
+2. Open **AI** → **Connect an AI tool** and turn on
+   **Allow connecting AI tools to Kaldrix in this company**.
+   Only someone with **Company details and settings: Full access** can change this setting.
+   If you do not have that access, ask a person in your company who does.
+3. Keep connections on, then install the package for your assistant below.
+   When asked for a server address, use **Copy address** on the same Kaldrix page.
+
+The AI module and connection setting apply to the whole company. When either is off,
+new connections and requests from already connected assistants are blocked. Each person
+still signs in with their own Kaldrix account and uses only the access they have been granted.
+
+If you sign in with a password, first enable the phone code in **My Profile** → **Security** →
+**Turn on the phone code**. It is required for AI connections. Google sign-in does not need this extra step.
+
+## Download and install
+
+Choose the assistant you use, then follow its installation guide. The download links
+always point to the newest [release](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases).
+
+| Assistant | Installation guide | Download ZIP |
+| --- | --- | --- |
+| Claude Code | [Install in Claude Code](#claude) | [kaldrix-claude.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-claude.zip) |
+| Gemini CLI | [Install in Gemini CLI](#gemini-cli) | [kaldrix-gemini.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-gemini.zip) |
+| ChatGPT and Codex | [Install in ChatGPT or Codex](#chatgpt-and-codex) | [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip) |
+
+Use the package for your assistant. `SHA256SUMS` in each release lists the checksums:
+`sha256sum -c SHA256SUMS --ignore-missing`.
+The `darwin.`, `linux.` and `win32.` copies of the Gemini package are the same file;
+Gemini CLI picks one of them when it installs from this repository.
 
 ## What you can do
 
@@ -24,8 +65,8 @@ is always available; creating or changing data requires an active Kaldrix subscr
 - **Keep the office in order.** Customers, tasks, documents and received invoices.
 
 Kaldrix validates and saves every change. Deleting data, sending documents to a client
-and replacing prices need your explicit confirmation. The assistant can do only what your role
-in the company and the permissions you grant when you connect allow.
+and replacing prices need your explicit confirmation. The assistant can do only what
+your permissions in Kaldrix and the access you grant when connecting allow.
 
 ## Try asking
 
@@ -34,22 +75,6 @@ in the company and the permissions you grant when you connect allow.
 - "Check the cost estimate for Kowalski house and explain the warnings before I send it."
 - "Prepare a draft contract from the accepted offer. Do not send it."
 - "Record this supplier invoice and keep the attached PDF."
-
-## Download
-
-Each [release](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases) has one package per client.
-The links below always point at the newest release.
-
-| Client | Package | How to use it |
-| --- | --- | --- |
-| Claude Code | [kaldrix-claude.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-claude.zip) | [Claude](#claude) |
-| Gemini CLI | [kaldrix-gemini.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-gemini.zip) | [Gemini CLI](#gemini-cli) |
-| ChatGPT and Codex | [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip) | [ChatGPT and Codex](#chatgpt-and-codex) |
-
-Packages for different clients are not interchangeable. `SHA256SUMS` in each release
-lists the checksums: `sha256sum -c SHA256SUMS --ignore-missing`.
-The `darwin.`, `linux.` and `win32.` copies of the Gemini package are the same file;
-Gemini CLI picks one of them when it installs from this repository.
 
 ## Claude
 
@@ -62,7 +87,7 @@ Gemini CLI picks one of them when it installs from this repository.
    claude plugin install kaldrixprod@kaldrix
    ```
 
-   Inside a Claude Code session you can do both at once:
+   Inside a Claude Code session (version 2.1.275 or later) you can do both at once:
    `/plugin install kaldrixprod --marketplace soft-yoo/kaldrix-mcp-plugins`.
 2. Start a new session (or run `/reload-plugins`). Run `/mcp`, choose `kaldrix`
    and sign in to Kaldrix in the browser window. Pick your company if you have more than one.
@@ -84,7 +109,8 @@ claude --plugin-url https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/lat
 
 These apps install plugins from Anthropic's directory. Kaldrix is waiting for
 Anthropic's review; after approval you will add it from
-[claude.ai/directory](https://claude.ai/directory) and it will also load in your Claude Code sessions.
+[claude.ai/directory](https://claude.ai/directory). Supported Claude Code versions can sync it
+when you sign in with the same Claude account.
 The ZIP from this repository is for Claude Code.
 
 ## Gemini CLI
@@ -109,8 +135,9 @@ unpack it and run `gemini extensions install <unpacked folder>`.
 
 ### ChatGPT (web)
 
-You need ChatGPT Plus, Pro, Business, Enterprise or Edu. In Business workspaces
-only admins and owners can turn on developer mode; in Enterprise and Edu an admin can allow it for you.
+Your ChatGPT account or workspace must allow uploading plugins with custom MCP servers.
+In a managed workspace, ask your administrator if the required options are unavailable.
+See [OpenAI's plugin permissions](https://learn.chatgpt.com/docs/enterprise/apps-and-connectors#choose-what-members-can-do-with-plugins).
 
 1. Download [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip).
 2. In ChatGPT on the web open **Settings** and turn on **Developer mode**.
@@ -139,7 +166,8 @@ After OpenAI approves Kaldrix, you will also find it in the ChatGPT plugin direc
 - **Kaldrix file storage** (`https://s3.waw.io.cloud.ovh.net`, OVH, Warsaw): large files you
   ask the assistant to upload (documents, textures, 3D models) are sent with HTTP PUT to a one-time
   upload address that the Kaldrix server returns. Small files go through the MCP server.
-- Sign-in uses OAuth in your AI client. The packages send no other data.
+- Sign-in uses OAuth in your AI client. The packages contain no passwords or tokens
+  and send no other data.
 
 This repository is generated from the Kaldrix sources; changes made here are overwritten.
 
@@ -151,15 +179,57 @@ Terms: [kaldrix.pl/app-terms.html](https://kaldrix.pl/app-terms.html)
 
 # Pluginy Kaldrix dla asystentów AI
 
-Pracuj z projektami budowy, harmonogramami i kosztorysami Kaldrix w Claude, Gemini CLI
-i ChatGPT. Potrzebujesz konta Kaldrix. Przy pierwszym połączeniu logujesz się do Kaldrix;
-paczki nie zapisują haseł ani tokenów. Plugin jest bezpłatny. Przeglądanie danych
-działa zawsze, a tworzenie i zmiana danych wymaga aktywnej subskrypcji Kaldrix.
+[English](#kaldrix-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
 
-Najnowsze paczki pobierzesz z tabeli [Download](#download). Każdy program ma własną paczkę;
-nie można ich zamieniać.
+Prowadź projekty budowy, przygotowuj kosztorysy i planuj pracę w Kaldrix z pomocą
+asystenta AI. W tym repozytorium znajdziesz paczki do instalacji w Claude Code,
+Gemini CLI, ChatGPT i Codex. Każda łączy się z Kaldrix pod adresem `https://api.kaldrix.pl/mcp`.
 
-**Co możesz zrobić:**
+Odznaka na początku strony prowadzi do aktualnego raportu M8ven o tym repozytorium paczek.
+
+## Zanim zaczniesz
+
+- **Załóż konto Kaldrix.** Zaloguj się do niego przy pierwszym połączeniu asystenta.
+- **Wybierz swojego asystenta poniżej.** Każdy program ma własną paczkę i instrukcję instalacji.
+- **Sprawdź subskrypcję.** Plugin jest bezpłatny. Przeglądanie danych nie wymaga aktywnej
+  subskrypcji; tworzenie i zmiana danych wymagają aktywnej subskrypcji Kaldrix.
+
+## Najpierw włącz połączenia AI w Kaldrix
+
+1. Zaloguj się do [Kaldrix](https://app.kaldrix.pl/ai) i sprawdź, czy masz wybraną właściwą firmę.
+   W **Subskrypcja** → **Funkcje** sprawdź, czy moduł **AI** jest włączony.
+   Właściciel firmy może go włączyć, jeśli plan obejmuje AI.
+2. Otwórz **AI** → **Podłącz narzędzie AI** i włącz
+   **Pozwól łączyć narzędzia AI z Kaldrix w tej firmie**.
+   Przełącznik może zmienić tylko osoba z uprawnieniem **Dane i ustawienia firmy: Pełny dostęp**.
+   Jeśli nie masz tego uprawnienia, poproś osobę w firmie, która je ma.
+3. Pozostaw połączenia włączone i zainstaluj poniżej paczkę dla swojego asystenta.
+   Gdy program zapyta o adres serwera, użyj **Kopiuj adres** na tej samej stronie Kaldrix.
+
+Moduł AI i zgoda na połączenia dotyczą całej firmy. Wyłączenie któregokolwiek z nich
+blokuje nowe połączenia oraz żądania od już połączonych asystentów. Każda osoba nadal
+loguje się na własne konto Kaldrix i korzysta wyłącznie z nadanego jej dostępu.
+
+Jeśli logujesz się hasłem, najpierw włącz kod z telefonu w **Mój profil** → **Bezpieczeństwo** →
+**Włącz kod z telefonu**. Jest wymagany przy łączeniu AI. Przy logowaniu przez Google ten dodatkowy krok nie jest potrzebny.
+
+## Pobieranie i instalacja
+
+Wybierz program, którego używasz, i przejdź do jego instrukcji. Linki do pobrania
+prowadzą do najnowszego [wydania](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases).
+
+| Asystent | Instrukcja instalacji | Pobierz ZIP |
+| --- | --- | --- |
+| Claude Code | [Instalacja w Claude Code](#instalacja-w-claude-code) | [kaldrix-claude.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-claude.zip) |
+| Gemini CLI | [Instalacja w Gemini CLI](#instalacja-w-gemini-cli) | [kaldrix-gemini.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-gemini.zip) |
+| ChatGPT i Codex | [Instalacja w ChatGPT lub Codex](#instalacja-w-chatgpt-i-codex) | [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip) |
+
+Pobierz paczkę przeznaczoną dla swojego asystenta. Sumy kontrolne są w pliku `SHA256SUMS`
+każdego wydania. Sprawdzisz je poleceniem `sha256sum -c SHA256SUMS --ignore-missing`.
+Kopie paczki Gemini z prefiksami `darwin.`, `linux.` i `win32.` mają identyczną zawartość;
+Gemini CLI wybiera odpowiednią nazwę przy instalacji z repozytorium.
+
+## Co możesz zrobić
 
 - wycenić dom w kilku krokach: podajesz wymiary, kondygnacje, ściany, dach i fundamenty,
   a Kaldrix tworzy model i szkic kosztorysu z Twojego cennika;
@@ -170,10 +240,10 @@ nie można ich zamieniać.
 - uporządkować biuro: klienci, zadania, dokumenty i faktury kosztowe.
 
 Kaldrix sprawdza i zapisuje każdą zmianę. Usunięcie danych, wysłanie dokumentu do klienta
-i zastąpienie cen wymagają Twojego wyraźnego potwierdzenia. Asystent może tyle, na ile pozwalają
-Twoja rola w firmie i uprawnienia nadane przy połączeniu.
+i zastąpienie cen wymagają Twojego wyraźnego potwierdzenia. Asystent działa w granicach
+Twoich uprawnień w Kaldrix i dostępu, który nadasz przy połączeniu.
 
-**Przykładowe polecenia:**
+## Przykładowe polecenia
 
 - „Znajdź projekt Dom Kowalskich i powiedz, co trzeba teraz zrobić.”
 - „Przygotuj wycenę parterowego domu murowanego 10 na 8 m z ławami i dachem dwuspadowym.”
@@ -181,7 +251,7 @@ Twoja rola w firmie i uprawnienia nadane przy połączeniu.
 - „Przygotuj projekt umowy z zaakceptowanej oferty. Nie wysyłaj jej.”
 - „Zapisz tę fakturę od dostawcy i zachowaj załączony PDF.”
 
-## Claude Code (terminal)
+## Instalacja w Claude Code
 
 1. Dodaj to repozytorium i zainstaluj plugin:
 
@@ -190,7 +260,7 @@ Twoja rola w firmie i uprawnienia nadane przy połączeniu.
    claude plugin install kaldrixprod@kaldrix
    ```
 
-   W otwartej sesji Claude Code możesz zrobić to jednym poleceniem:
+   W otwartej sesji Claude Code (od wersji 2.1.275) możesz zrobić to jednym poleceniem:
    `/plugin install kaldrixprod --marketplace soft-yoo/kaldrix-mcp-plugins`.
 2. Otwórz nową sesję (albo wpisz `/reload-plugins`). Wpisz `/mcp`, wybierz `kaldrix`
    i zaloguj się do Kaldrix w oknie przeglądarki. Jeśli masz kilka firm, wybierz właściwą.
@@ -201,13 +271,20 @@ Aktualizacja: `claude plugin update kaldrixprod@kaldrix`. Usunięcie: `claude pl
 Repozytorium [soft-yoo/kaldrix-claude-plugin](https://github.com/soft-yoo/kaldrix-claude-plugin)
 instaluje ten sam plugin pod tą samą nazwą `kaldrix`. Dodaj tylko jedno z nich.
 
+Aby wypróbować plugin w jednej sesji bez instalacji:
+
+```bash
+claude --plugin-url https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-claude.zip
+```
+
 ## claude.ai, Claude Desktop i Cowork
 
 Te aplikacje instalują pluginy z katalogu Anthropic. Kaldrix czeka na sprawdzenie
-przez Anthropic. Po zatwierdzeniu dodasz go z [claude.ai/directory](https://claude.ai/directory)
-i zadziała też w Claude Code. ZIP z tego repozytorium jest dla Claude Code.
+przez Anthropic. Po zatwierdzeniu dodasz go z [claude.ai/directory](https://claude.ai/directory).
+Obsługiwane wersje Claude Code mogą go też pobrać, gdy zalogujesz się na to samo konto Claude.
+ZIP z tego repozytorium jest dla Claude Code.
 
-## Gemini CLI
+## Instalacja w Gemini CLI
 
 1. Zainstaluj rozszerzenie z tego repozytorium i potwierdź pytanie:
 
@@ -225,12 +302,13 @@ W korzeniu repozytorium znajdują się też `gemini-extension.json` i `skills/` 
 Na systemach innych niż macOS, Linux i Windows pobierz `kaldrix-gemini.zip`,
 rozpakuj go i wpisz `gemini extensions install <rozpakowany folder>`.
 
-## ChatGPT i Codex
+## Instalacja w ChatGPT i Codex
 
 ### ChatGPT (w przeglądarce)
 
-Potrzebujesz ChatGPT Plus, Pro, Business, Enterprise albo Edu. W przestrzeni Business
-tryb dewelopera włączają tylko administratorzy i właściciele; w Enterprise i Edu administrator może go Tobie udostępnić.
+Twoje konto lub przestrzeń robocza ChatGPT musi pozwalać na dodawanie pluginów z własnymi serwerami MCP.
+Jeśli w przestrzeni firmowej nie widzisz potrzebnych opcji, poproś administratora o sprawdzenie dostępu.
+Zobacz [uprawnienia pluginów w dokumentacji OpenAI](https://learn.chatgpt.com/docs/enterprise/apps-and-connectors#choose-what-members-can-do-with-plugins).
 
 1. Pobierz [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip).
 2. W ChatGPT w przeglądarce otwórz **Settings** i włącz **Developer mode**.
@@ -250,12 +328,29 @@ Po zatwierdzeniu przez OpenAI Kaldrix będzie też w katalogu pluginów ChatGPT.
    tak jak opisuje [instrukcja OpenAI](https://developers.openai.com/plugins/build/plugins).
 3. Uruchom ponownie Codex, zainstaluj Kaldrix z listy pluginów i zaloguj się do Kaldrix.
 
-**Dokąd trafiają dane:** wszystkie odczyty i zmiany danych idą do serwera MCP Kaldrix
-(`https://api.kaldrix.pl/mcp`). Duże pliki (dokumenty, tekstury, modele 3D) asystent wysyła
-metodą PUT na jednorazowy adres magazynu plików Kaldrix w OVH (`https://s3.waw.io.cloud.ovh.net`),
-który zwraca serwer Kaldrix. Zapisane dane zostają na koncie firmy, dopóki ich nie usuniesz.
+## Dokąd trafiają dane
+
+- **Serwer Kaldrix** (`https://api.kaldrix.pl/mcp`): wszystkie odczyty i zmiany danych,
+  na przykład projekty, kosztorysy, dane klientów (imiona, nazwiska, e-maile, adresy),
+  faktury i umowy. Zapisane dane zostają na koncie firmy, dopóki ich nie usuniesz
+  lub nie usuniesz konta.
+- **Magazyn plików Kaldrix** (`https://s3.waw.io.cloud.ovh.net`, OVH, Warszawa): duże pliki,
+  które zlecisz dodać, na przykład dokumenty, tekstury i modele 3D. Asystent wysyła je metodą
+  HTTP PUT na jednorazowy adres otrzymany od Kaldrix. Małe pliki przechodzą przez serwer Kaldrix.
+- Logowanie odbywa się przez OAuth w Twoim programie z asystentem. Paczki nie zawierają haseł
+  ani tokenów i nie wysyłają innych danych.
+
+Repozytorium powstaje automatycznie ze źródeł Kaldrix. Zmiany wprowadzone bezpośrednio tutaj
+zostaną nadpisane przy aktualizacji.
+
+Pomoc: [kaldrix.pl/integracje.html](https://kaldrix.pl/integracje.html) ·
+Prywatność: [kaldrix.pl/app-privacy.html](https://kaldrix.pl/app-privacy.html) ·
+Warunki: [kaldrix.pl/app-terms.html](https://kaldrix.pl/app-terms.html)
 
 ## License
 
 [MIT](https://github.com/soft-yoo/kaldrix-mcp-plugins/blob/main/LICENSE). The license covers the files in this repository and its releases.
 The Kaldrix service and its MCP server are not part of it.
+
+Licencja MIT obejmuje pliki w tym repozytorium i jego wydaniach. Usługa Kaldrix
+i jej serwer MCP nie są objęte tą licencją.
