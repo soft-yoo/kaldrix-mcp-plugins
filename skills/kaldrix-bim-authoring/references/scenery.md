@@ -45,23 +45,28 @@ the result of the previous write, and send it with the next write. A stale value
 
 ## Generation
 
-`generate_scenery` needs `style` and `density`:
-
-- `GARDEN` — a fenced garden; `HEDGED_PLOT` — a plot lined with a hedge; `FOREST` — woodland with no
-  plot boundary, trees also outside the plot.
-- `LOW`, `MEDIUM`, `HIGH` — at most 40, 90 or 160 generated objects.
+`generate_scenery` needs a planting `style` and a `density`. Choose `GARDEN` for a fenced garden,
+`HEDGED_PLOT` for a hedge around the plot, or `FOREST` for woodland extending beyond the plot.
+`ORCHARD` places trees in rows and `MEADOW` leaves an open area with low vegetation.
+The maximum number of generated objects is 40 for `LOW`, 90 for `MEDIUM` and 160 for `HIGH`.
 
 Rules the generator keeps:
 
 - nothing stands in the building clear zone, and trees keep 4 m away from it;
 - a 4 m wide access corridor from the clear zone to the plot front stays empty;
 - nothing is generated inside a water area;
-- the same seed, sizes, style and density give the same layout.
+- repeating the generation with the same seed, settings, available models and kept objects reproduces the layout.
 
 Without `sceneryId` a new scenery is created. With `sceneryId` and `expectedVersion` the scenery is
 generated again: unlocked `GENERATED` objects are replaced, `MANUAL` and locked objects stay. To keep
 a generated tree, lock it with `save_scenery_objects` before generating again. To get a different
 layout, send another `seed`.
+
+Use the optional `feature` with any planting style. `SEATING` requests outdoor seating and related
+furniture, `VEGETABLE_GARDEN` requests garden beds or equipment, and `PLAY_AREA` requests play equipment.
+The generator uses available Kaldrix catalog models that fit on the plot. Missing equipment is skipped.
+Omit `feature` to keep the saved choice on regeneration. New and older sceneries default to `NONE`.
+Send `NONE` explicitly to turn off the generated equipment. The result reports the choice as `generationFeature`.
 
 Optional landscape:
 
@@ -79,8 +84,8 @@ only reads the project. Refused with `PROJECT_SCENERY_NO_BUILDING` when the proj
 Default sizes: plot 30 × 40 m, clear zone 14 × 12 m. The plot must reach at least 2 m past the clear
 zone on every side.
 
-`SCENERY_CATALOG_EMPTY` means the Kaldrix graphics library has no scene models yet; build the scenery
-by hand with `save_scenery_objects` instead.
+`SCENERY_CATALOG_EMPTY` means the catalog has no usable models for this generation. You can place a
+ready company model by hand with `save_scenery_objects`.
 
 ## Objects by hand
 
