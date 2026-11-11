@@ -52,8 +52,7 @@ tool comes next. Live schemas, `nextTools` and `fixTools` in results stay author
   Accepting reported quantities only: prefer `apply_estimate_model_changes` over `replace_estimate_position`;
   refreshing prices is not for quantity changes. Topic: "The estimate follows the model" in the service flow.
 - `skip_estimate_new_elements`: adding a skipped element later with `replace_estimate_position` clears the skip.
-- The review summary, coverage gaps and applicability issues match `get_estimate_checks`. VAT_RATES_MIXED /
-  VAT_PROJECT_MISMATCH: `apply_project_vat_to_estimate` after confirming that no position needs another rate.
+- The review summary, coverage gaps and applicability issues match `get_estimate_checks`.
 - `set_primary_project_estimate`: `get_project_settlement` shows totals, plan vs actual and alerts for it.
 
 ## Offer and documents

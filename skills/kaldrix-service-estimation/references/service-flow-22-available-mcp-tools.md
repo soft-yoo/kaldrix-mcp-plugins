@@ -23,8 +23,7 @@ Write:
 - `add_service_labor_activity`, `install_construction_starter_pack`;
 - `create_catalog_resource`, `update_catalog_resource`;
 - `create_service_recipe`, `update_service_recipe`;
-- `create_project_estimate`, `update_project_estimate`, `copy_project_estimate`, `set_primary_project_estimate`,
-  `apply_project_vat_to_estimate`;
+- `create_project_estimate`, `update_project_estimate`, `copy_project_estimate`, `set_primary_project_estimate`;
 - `quick_add_estimate_position`, `assign_estimate_position_scope`, `update_estimate_sheet`,
   `price_estimate_from_model`, `apply_estimate_model_changes`, `skip_estimate_new_elements`,
   `acknowledge_estimate_model_changes`, `detach_estimate_items_from_model`;
@@ -35,7 +34,7 @@ Write:
 - lower-level writes: `add_catalog_service_to_estimate`, `replace_estimate_position`, `set_estimate_double_count_accepted`,
   `create_estimation_item`, `update_estimation_item`.
 
-Always with `confirm=true` after the user approves: `update_project_estimate`, `apply_project_vat_to_estimate`,
+Always with `confirm=true` after the user approves: `update_project_estimate`,
 `update_service_recipe`, `update_catalog_resource`, `change_estimate_price_list`, `update_estimate_sheet`,
 `apply_estimate_model_changes`, `replace_estimate_position`, `update_estimation_item` and `generate_estimate_pdf`.
 Only in some cases: `import_price_list` when it overwrites existing data, `adjust_price_list_prices` unless `dryRun`,

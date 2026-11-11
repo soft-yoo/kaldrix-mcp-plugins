@@ -1,10 +1,7 @@
-## VAT rate of positions
+## VAT on estimate positions
 
-The VAT rate of a new position comes from the estimate, never from the price list (KDX-217). By default the estimate
-follows the project: a single-family house up to 300 m² of usable floor area or a dwelling up to 150 m² gets 8%, above
-the limit the base is split proportionally (8% on limit / area of the base, 23% on the rest, `vatReducedShare`), and a
-non-residential object gets 23%. `create_estimation_item` without `vatRate` takes the estimate rate; set `vatRate`
-only when a row deliberately differs (material sold separately without a construction service is 23%).
-`get_estimate_checks` reports `VAT_RATES_MIXED` (positions with another rate than the estimate) and
-`VAT_PROJECT_MISMATCH` (the estimate rate chosen by hand differs from the project); after confirming with the user,
-`apply_project_vat_to_estimate` gives the estimate and every position the project rate. This is not tax advice.
+A catalog service supplies the sales VAT for a new service position. A resource sold separately supplies its own catalog rate. VAT on a material inside a service is purchase information. The customer pays VAT once on the selling price of the service. For a manual position, ask the contractor for its sales rate.
+
+Use the saved rate for existing positions. The contractor may override a draft position. The estimate and the public offer total the VAT of the positions by rate. A private recipient sees the amounts the contractor quoted.
+
+For a Quick quote, omit `vat` to use the catalog rates. If the contractor chooses one rate for the quote positions, send `vat: "CUSTOM"` with a fraction such as `customVatRate: 0.0725` for 7.25%. Taxable zero and `EXEMPT` are separate choices. To change all positions in a draft, use `set_quick_quote_vat` after the contractor approves the new rate.
