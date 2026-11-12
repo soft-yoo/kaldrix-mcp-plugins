@@ -10,6 +10,13 @@ not permission to execute every step. Use the connected Kaldrix MCP server for
 live data, business decisions, calculations, validation and controlled writes.
 Never implement a parallel pricing, geometry, readiness or authorization rule.
 
+Workspace creation and user-account or membership creation, invitation and deletion
+are available only in the Kaldrix app. Never attempt them through MCP, another tool
+or a raw API call. Existing business tools may read people or update records only
+within the connected person's current permissions; this does not grant account
+administration. A shared owner subscription does not share data between workspaces
+or move an existing connector to another workspace.
+
 ## Start with the smallest relevant reference
 
 If session guidance is not already loaded, call `describe_kaldrix_mcp` without

@@ -1,8 +1,13 @@
-# Kaldrix plugins for AI assistants
+**[Kaldrix.pl](https://kaldrix.pl/)** · [English](https://kaldrix.pl/en.html) — construction cost estimating and 3D house modelling software for small building companies.
+
+# Kaldrix 3D Construction & Cost Estimation: MCP plugins for AI assistants
 
 [![M8ven Score](https://m8ven.ai/badge/mcp/soft-yoo-kaldrix-mcp-plugins-xzklay)](https://m8ven.ai/mcp/soft-yoo-kaldrix-mcp-plugins-xzklay?s=readme)
 
-[English](#kaldrix-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
+[English](#kaldrix-3d-construction--cost-estimation-mcp-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
+
+Kaldrix is made by Soft-Yoo Piotr Kosmala in Poland. It is not related to the "Kaldrix Connect"
+MCP server or to Kaldrix from the game AION 2.
 
 Manage construction projects, prepare cost estimates and plan work in Kaldrix with your
 AI assistant. This repository provides installation packages for Claude Code, Gemini CLI,
@@ -51,6 +56,19 @@ Use the package for your assistant. `SHA256SUMS` in each release lists the check
 `sha256sum -c SHA256SUMS --ignore-missing`.
 The `darwin.`, `linux.` and `win32.` copies of the Gemini package are the same file;
 Gemini CLI picks one of them when it installs from this repository.
+
+## Quick start
+
+| Client | Start here | Details |
+| --- | --- | --- |
+| Claude Code | `claude plugin marketplace add soft-yoo/kaldrix-mcp-plugins`, then `claude plugin install kaldrixprod@kaldrix` | [Claude](#claude) |
+| Gemini CLI | `gemini extensions install https://github.com/soft-yoo/kaldrix-mcp-plugins` | [Gemini CLI](#gemini-cli) |
+| ChatGPT | Upload [kaldrix-chatgpt.zip](https://github.com/soft-yoo/kaldrix-mcp-plugins/releases/latest/download/kaldrix-chatgpt.zip) in **Plugins → Add → Upload plugin archive** (developer mode) | [ChatGPT](#chatgpt-web) |
+| Codex | Unpack the same `kaldrix-chatgpt.zip` into `~/.codex/plugins/kaldrixprod` | [Codex](#codex) |
+
+Then sign in to Kaldrix when the client asks (`/mcp` in Claude Code, `/mcp auth kaldrix` in Gemini CLI).
+Any other MCP client: add the remote server `https://api.kaldrix.pl/mcp`
+(Streamable HTTP) and sign in to Kaldrix with OAuth when the client asks.
 
 ## What you can do
 
@@ -179,7 +197,10 @@ Terms: [kaldrix.pl/app-terms.html](https://kaldrix.pl/app-terms.html)
 
 # Pluginy Kaldrix dla asystentów AI
 
-[English](#kaldrix-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
+[English](#kaldrix-3d-construction--cost-estimation-mcp-plugins-for-ai-assistants) · [Polski](#pluginy-kaldrix-dla-asystentów-ai)
+
+Strona programu: [kaldrix.pl](https://kaldrix.pl/). Kaldrix tworzy Soft-Yoo Piotr Kosmala. Nie ma związku z serwerem MCP „Kaldrix Connect”
+ani z postacią Kaldrix z gry AION 2.
 
 Prowadź projekty budowy, przygotowuj kosztorysy i planuj pracę w Kaldrix z pomocą
 asystenta AI. W tym repozytorium znajdziesz paczki do instalacji w Claude Code,

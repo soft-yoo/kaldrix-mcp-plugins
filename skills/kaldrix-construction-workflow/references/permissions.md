@@ -21,6 +21,12 @@ within that person's access, narrowed by consent and enabled modules; some app o
 - **What this connection gets.** Its scopes are the person's current permissions, narrowed to what the person approved
   on the consent screen. They are re-checked on every call: a permission taken away stops working immediately; a newly
   given permission needs the connector to be reconnected and the new scope approved.
+- **Workspace and account lifecycle is app-only.** MCP cannot create workspaces, create or delete user accounts,
+  invite people, create or remove memberships, or delete the connected workspace. Use the Kaldrix app for these
+  actions. Existing tools may read people or update business records only within their declared scopes and the
+  person's live access. A crew record without a login is a business record, not a new Kaldrix account.
+  The owner's subscription may cover several workspaces; it never grants access across them or changes the
+  workspace selected for an existing OAuth connection. Do not use generic GraphQL, REST or another tool as a bypass.
 - **Never available to connectors**, whatever the person may do in the app: account and sign-in security, team and
   permission management, company settings, subscription and payments, and the KSeF connection. Some removals (for
   example deleting a whole project) exist only in the app.
