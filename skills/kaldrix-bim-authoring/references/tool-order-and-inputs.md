@@ -29,6 +29,7 @@ tool comes next. Live schemas, `nextTools` and `fixTools` in results stay author
   WALL = `remove_wall`, SLAB = `remove_slab`, INSTALLATION_POINT = `remove_installation_points`,
   STRUCTURAL_MEMBER = `remove_structural_members`, FRAMING_SYSTEM = `remove_framing_system`,
   INSTALLATION_CIRCUIT = `remove_installation_circuits`.
+- Balconies: `add_balcony` adds the slab, railing and balcony door on an external wall in one write.
 - Slabs: roofs are created with `create_roof`; roof windows, chimneys and stairwells with `add_slab_opening`.
   Slab opening ids for `update_slab_opening` / `remove_slab_openings`: `list_elements` with kind SLAB_OPENING.
   Managed FLOOR/CEILING surfaces are excluded with `set_floor_surface_usage`; a roof slab is removed with its whole

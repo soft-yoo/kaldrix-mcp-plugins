@@ -60,7 +60,8 @@ Editing an acceptance protocol, punch item or warranty defect requires `realizat
    mark them with `set_material_list_items_state` (BOUGHT, DELIVERED, TO_BUY). The state survives estimate changes; a
    changed quantity after the purchase shows as `quantityChanged`. PDF and the e-mail to a wholesaler stay in the app.
    Crews and site hours: crews and assignments need the SCHEDULE module, logging and reading site hours needs
-   TIME_TRACKING (which also needs SCHEDULE). `list_crews` shows the company crews (people, trades, subcontractor account);
+   TIME_TRACKING (works without SCHEDULE; then entries have no stage). `list_crews` shows the company crews (people,
+   trades, subcontractor account);
    `assign_crew_to_stage` puts a crew or one person on a stage (dates follow the stage unless given) and returns conflicts
    — the same crew or person on another site on the same days — as warnings; a labour-hour stage takes its duration from
    the assigned headcount (`scheduleChanged` — read the schedule again). `get_project_crew_assignments` lists the site's
