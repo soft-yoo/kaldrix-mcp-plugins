@@ -3,6 +3,13 @@
 The steps below use lower-level tools from the same `workspace` catalog. For a simple position prefer
 `quick_add_estimate_position`, the scope flow, `update_estimate_sheet` and `remove_estimate_position`.
 
+For an RMS estimate choose `kind=RESOURCES` when creating it. Read `kind` and `resourceMarkups` on the estimate.
+Only LABOR, MATERIAL and EQUIPMENT rows are allowed; services are refused with `ESTIMATE_KIND_SERVICES_NOT_ALLOWED`.
+For a RESOURCES row send the net **purchase** price as `purchasePriceNet`; the server applies the resource markup and
+returns the sale price as `unitPriceNet`. Do not add the markup yourself. Outside RESOURCES, `unitPriceNet` is the sale
+price. Change estimate markup rules with `update_project_estimate` after user confirmation. Purchase prices and
+resource markups are hidden without access to costs; never infer them from the sale price.
+
 1. Call `list_project_estimates` with the project UUID.
 2. Create an empty estimate with `create_project_estimate` when needed.
 3. List its frozen rows with `list_estimation_items`. Both this tool and `list_estimate_sheet_rows` default to 20 compact rows. Follow `hasMore`/`nextCursor` to cover the required positions; totals cover the whole estimate. Set `includeComponents=true` for composition and `includeDetails=true` for formulas, notes and provenance. Check `componentsIncluded`/`detailsIncluded`: an omitted list is not proof of missing composition.

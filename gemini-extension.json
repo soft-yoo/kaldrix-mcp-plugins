@@ -1,6 +1,6 @@
 {
   "name": "kaldrixprod",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Model buildings in 2D and 3D, price them from your own price lists, and run offers, contracts, schedules, site logs and invoices for your construction projects in Kaldrix.",
   "mcpServers": {
     "kaldrix": {
