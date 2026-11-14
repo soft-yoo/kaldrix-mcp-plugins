@@ -28,15 +28,21 @@ Write:
   `price_estimate_from_model`, `apply_estimate_model_changes`, `skip_estimate_new_elements`,
   `acknowledge_estimate_model_changes`, `detach_estimate_items_from_model`;
 - `set_estimate_sections`, `assign_estimate_position_to_section`;
+- `import_estimate_rows` (spreadsheet rows into a DRAFT estimate as own-price positions; preview with `dryRun=true`,
+  show the mapping, sample positions and row problems to the user, then import; `saveTemplateName` keeps the mapping
+  as a company template for the next file in the same layout; normalise unknown unit texts and VAT in the cells
+  before sending, or use a company template that maps them; `documentId` reads an uploaded XLSX/CSV file instead of `rows`);
 - `refresh_estimation_item_prices` (`confirm=true` with `includeOverridden`);
 - `generate_estimate_pdf` (stores a new project document);
+- `export_estimate_excel` (stores the estimate XLSX as a project document, replacing the previous export);
 - `send_estimate_offer` (`estimates.write`) and `revoke_estimate_offer` (`estimates.delete`), both with `confirm=true`;
 - lower-level writes: `add_catalog_service_to_estimate`, `replace_estimate_position`, `set_estimate_double_count_accepted`,
   `create_estimation_item`, `update_estimation_item`.
 
 Always with `confirm=true` after the user approves: `update_project_estimate`,
 `update_service_recipe`, `update_catalog_resource`, `change_estimate_price_list`, `update_estimate_sheet`,
-`apply_estimate_model_changes`, `replace_estimate_position`, `update_estimation_item` and `generate_estimate_pdf`.
+`apply_estimate_model_changes`, `replace_estimate_position`, `update_estimation_item`, `generate_estimate_pdf` and
+`export_estimate_excel`.
 Only in some cases: `import_price_list` when it overwrites existing data, `adjust_price_list_prices` unless `dryRun`,
 `assign_estimate_position_scope` when it replaces sources, and `set_estimate_sections` when it deletes sections.
 

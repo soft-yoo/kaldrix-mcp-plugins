@@ -55,6 +55,11 @@ thickness to the sum of layers. Build-ups are in PROJECTS; only `get_wall_frame`
    sides, interrupts battens and counter-battens and reduces the covering area. Price them with SLAB_OPENING rules
    (`SLAB_OPENING_COUNT` + elementSubtypes [ROOF_WINDOW], `SLAB_OPENING_FLASHING_COUNT`). Replacing the roof keeps
    openings that still fit the new roof planes; the others are removed and reported in `warnings`.
+   Dormers: `add_slab_opening` kind DORMER on a roof plane of at least 15 degrees, with centerX/centerY, width along
+   the eaves (0.6-8 m), dormerRoof GABLE or SHED, optional dormerWallHeight (0.4-3 m, default 1.2) and dormerPitch.
+   The server sets the length along the slope and recomputes it when the roof pitch changes; free outlines are
+   refused. Price dormers with DORMER_ROOF_AREA, DORMER_WALL_AREA and the DORMER_*_LENGTH edge rules (eaves, ridge,
+   valleys, verges, flashing); elementSubtypes GABLE / SHED filter by dormer roof.
 9. Floor/ceiling estimate: joists and ceiling battens are framing systems (the slab has no frame roles and no
    member rules): `FRAMING_SYSTEM` + `FRAMING_ROLE_VOLUME` (`M3`) with
    `["TIMBER_FLOOR_JOISTS","JOIST","TRIMMER","HEADER","BLOCKING"]`, anchors `FRAMING_FIXING_COUNT`, ceiling battens

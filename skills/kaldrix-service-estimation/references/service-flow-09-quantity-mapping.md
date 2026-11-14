@@ -16,6 +16,9 @@ manual quantity. Read `kaldrix://estimation/quantity-rules` and use one exact co
 - gutters / ridge tiles / verge flashings: `SLAB` + `ROOF_EAVE_LENGTH` / `ROOF_RIDGE_LENGTH` / `ROOF_VERGE_LENGTH` + `MB`
   with `elementSubtypes: ["ROOF"]`; a roof edge against a higher wall (ground floor in front of the upper floor, garage at
   the house) is none of them — wall abutment flashing `SLAB` + `ROOF_WALL_FLASHING_LENGTH` + `MB` with `["ROOF"]`;
+  the break between the steep and the gentle planes of a mansard roof: `SLAB` + `ROOF_BREAK_LENGTH` + `MB` with `["ROOF"]`;
+  flat roof parapet coping `SLAB` + `ROOF_PARAPET_LENGTH` + `MB` and soffit lining under the eaves and gable overhang
+  `SLAB` + `ROOF_SOFFIT_AREA` + `M2`, both with `["ROOF"]` (parapet walls are counted by the `WALL_*` rules);
 - layered build-ups (walls/slabs with `buildUpId`, see `list_build_ups`): plasterboard on timber-frame walls
   `WALL` + `WALL_LAYER_AREA` + `M2` with `elementSubtypes: ["GYPSUM_BOARD"]`; timber wall frame per member role
   `WALL` + `WALL_FRAME_ROLE_VOLUME` + `M3` with `["STUD","BOTTOM_PLATE","TOP_PLATE","KING_STUD","TRIMMER","SILL","CRIPPLE"]`

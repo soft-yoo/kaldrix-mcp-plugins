@@ -66,3 +66,8 @@ tool comes next. Live schemas, `nextTools` and `fixTools` in results stay author
   fields, so read `get_company_offer_settings` first and send every field to keep.
 - As-built PDF: enter executed quantities with `update_estimate_sheet` (`actualQuantity`) before
   `generate_estimate_as_built_pdf`.
+- Excel: `export_estimate_excel` (`confirm=true`) stores the same XLSX as the app Excel button with the project documents
+  and replaces the previous export. To load a spreadsheet, upload it as a project document (`upload_document` or
+  `request_document_upload` + `complete_document_upload`) and send its id as `documentId` to `import_estimate_rows`
+  (`dryRun=true` first, `sheetName` for another sheet); the file must belong to the same project, reading it needs
+  `documents.read`, and an edited Kaldrix export loads back without a mapping. Saving the Excel needs `price-list.read`.
