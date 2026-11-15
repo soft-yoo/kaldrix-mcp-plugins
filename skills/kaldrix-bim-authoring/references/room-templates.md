@@ -1,16 +1,7 @@
-## Outline model contract
-
-
-A project contains independent buildings. Each building has a stable UUID, a name, a description, a type and an outer-face `baseOutline`. Floors belong to one building and inherit this footprint unless they have an `outlineOverride`. Coordinates use project plan metres (x, y); 3D plan coordinates are (x, z), with height on y.
-
-
-Use the canonical sequence in `kaldrix://projects/house-building-workflow`: project → building → outline → floors → partitions → room labels.
-
 # Room and Opening Templates
 
-Use these values as sensible defaults when the user does not provide exact dimensions.
-
-All dimensions are in metres.
+Sensible defaults (metres) when the user gives no exact dimensions. Model contract and canonical sequence:
+`kaldrix://projects/house-building-workflow`.
 
 ## Room templates
 
@@ -41,8 +32,5 @@ All dimensions are in metres.
 
 ## Placement notes
 
-- Doors usually use `sillHeight = 0.0`.
-- Typical windows use `sillHeight = 0.80-0.90`.
-- Bathroom windows are often smaller and higher.
-- Always validate that `positionOnWall + width <= wall.length`.
-- Always validate that `sillHeight + height <= wall.height`.
+- Doors usually use `sillHeight = 0.0`; typical windows `sillHeight = 0.80-0.90`; bathroom windows are often smaller and higher.
+- Always validate that `positionOnWall + width <= wall.length` and that `sillHeight + height <= wall.height`.

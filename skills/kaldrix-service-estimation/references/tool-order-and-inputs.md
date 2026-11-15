@@ -1,84 +1,83 @@
 # Tool order and input sources: estimates, price lists and offers
 
-Tool descriptions say only what each tool does. This page says where inputs come from and which
-tool comes next. Live schemas, `nextTools` and `fixTools` in results stay authoritative.
+Where inputs come from and which tool comes next. Live schemas, `nextTools` and `fixTools` stay authoritative;
+details are in the linked topics of `kaldrix://estimation/service-flow`.
 
 ## Catalog, services and price lists
 
-- No price list yet (`get_price_list` fails or `list_price_lists` returns no items): `create_price_list` (omit the currency to use the configured one).
-  Copy or convert an existing list with `copy_price_list`: OWN source ids from `list_price_lists`, DEMO ids from
-  `list_demo_price_lists`, target currency from `list_price_lists` `currencyOptions`. Then change prices in the copy and
-  move estimates with `change_estimate_price_list`. A price list used by an estimate is archived with
-  `archive_price_list`, not deleted.
-- Resources: check `list_catalog_resources` for duplicates before `create_catalog_resource`; `priceNet` is in the
-  currency of `get_price_list`. Material categories: `kaldrix://estimate/material-categories`; units: `kaldrix://estimate/units`.
-  After `deactivate_catalog_resource`, review affected services with `list_service_recipes`. Frozen estimate rows keep
-  old prices until `refresh_estimation_item_prices`.
-- Services: create resources first, check `list_service_recipes` for duplicates, then `create_service_recipe`.
-  Categories: `kaldrix://estimation/catalog-categories`; element type, quantity rule and unit combinations and
-  `elementSubtypes` filters: `kaldrix://estimation/quantity-rules`.
-- `install_construction_starter_pack`, then pick services with `list_service_recipes`. Never add a whole-system service
-  and its per-role services to one estimate (`review_estimate_against_model` reports `doubleCounted`).
+- No price list (`get_price_list` fails or `list_price_lists` returns no items): `create_price_list` (omit
+  currency to use the configured one). `copy_price_list` copies or converts: OWN ids from `list_price_lists`,
+  DEMO ids from `list_demo_price_lists`, target currency from `list_price_lists` `currencyOptions`; change
+  prices in the copy, move estimates with `change_estimate_price_list`. Archive a list used by an estimate with
+  `archive_price_list` instead of deleting it.
+- Resources: check `list_catalog_resources` for duplicates before `create_catalog_resource`; `priceNet` is in
+  the `get_price_list` currency. Material categories `kaldrix://estimate/material-categories`, units
+  `kaldrix://estimate/units`. After `deactivate_catalog_resource` review affected services with
+  `list_service_recipes`; frozen rows keep old prices until `refresh_estimation_item_prices`.
+- Services: resources first, `list_service_recipes` for duplicates, then `create_service_recipe`. Categories
+  `kaldrix://estimation/catalog-categories`; element type/quantity rule/unit combinations and `elementSubtypes`
+  filters `kaldrix://estimation/quantity-rules`.
+- `install_construction_starter_pack`, then pick services with `list_service_recipes`. Never add a whole-system
+  service and its per-role services to one estimate (`review_estimate_against_model` reports `doubleCounted`).
 
 ## Building an estimate
 
-- `create_project_estimate`, then price-list services with `add_catalog_service_to_estimate` and rows outside the price
-  list with `create_estimation_item`. The full order is in `kaldrix://estimation/service-flow`.
-- Quantity scopes: sources from `list_estimate_quantity_sources` or `get_estimate_scope_proposals`; ready scopes from
+- `create_project_estimate`, then `add_catalog_service_to_estimate` (price-list services) and
+  `create_estimation_item` (rows outside the price list).
+- Scopes: sources from `list_estimate_quantity_sources` or `get_estimate_scope_proposals`; ready scopes from
   `plan_estimate_position_quantity`, copied unchanged to `add_catalog_service_to_estimate` or
-  `replace_estimate_position`. Do not calculate or distribute quantities in the client. `list_element_service_quantities`
-  takes `recipeIds` from `list_service_recipes` and riser ids from `list_installation_risers`.
-- MANUAL components, their ids and units: `get_service_recipe`. Sections: read `get_project_estimate`, create with
-  `set_estimate_sections` (keep existing section ids); `list_estimation_items` returns server-calculated `sectionTotals`.
-- A pending position from `quick_add_estimate_position` (`scopePending`): `preview_estimate_position_scope`, show the
-  summary, then `assign_estimate_position_scope` with the same input after approval.
+  `replace_estimate_position`; never calculate or distribute quantities in the client.
+  `list_element_service_quantities` takes `recipeIds` from `list_service_recipes` and riser ids from
+  `list_installation_risers`.
+- MANUAL components, ids and units: `get_service_recipe`. Sections: read `get_project_estimate`, write with
+  `set_estimate_sections` (keep existing section ids); `list_estimation_items` returns `sectionTotals`.
+- `quick_add_estimate_position` with `scopePending`: `preview_estimate_position_scope`, show the summary, then
+  `assign_estimate_position_scope` with the same input after approval.
 - Project-linked or multi-scope services change with `replace_estimate_position`, not `update_estimation_item`.
-- Reading rows: `list_estimate_sheet_rows` right before `update_estimate_sheet` (exact row versions). Read-only review,
+- `list_estimate_sheet_rows` right before `update_estimate_sheet` (exact row versions). Read-only review,
   filters, VAT, sections, discounts, options and `serviceOccurrenceId` for `replace_estimate_position` /
   `remove_estimate_position`: `list_estimation_items`.
-- RMS (`kind=RESOURCES`): send the net purchase price as `purchasePriceNet`, including in `update_estimate_sheet`.
-  `unitPriceNet` is the returned sale price and is rejected as a price input in RMS; never add the markup yourself.
-- Discounts: markup after discount is in `list_estimation_items`; position discounts are set with
-  `update_estimate_sheet`. Options: `save_estimate_option_groups`, then `set_estimate_position_option`.
-- Markup rules and their cost bases: read `kaldrix://estimation/markup-rules` before changing them.
-  For the estimate header, send all `PURCHASE_COSTS`, `INDIRECT_COSTS`, and `PROFIT` stages, keeping zero-percent
-  stages, or `[]` to clear the header. Omitted/null rules keep the current list; incomplete lists are rejected.
-  Legacy percent patches must also leave a complete header. Position-level overrides retain their own rules.
+- RMS (`kind=RESOURCES`): net purchase price as `purchasePriceNet`, also in `update_estimate_sheet`; returned
+  `unitPriceNet` is the sale price and is rejected as price input; never add the markup yourself.
+- Discounts: markup after discount in `list_estimation_items`; position discounts via `update_estimate_sheet`.
+  Options: `save_estimate_option_groups`, then `set_estimate_position_option`.
+- Markup rules: read `kaldrix://estimation/markup-rules` first. Header: all `PURCHASE_COSTS`, `INDIRECT_COSTS`
+  and `PROFIT` stages (zero-percent too) or `[]` to clear; omitted/null keeps the list; incomplete lists and
+  legacy percent patches leaving an incomplete header are rejected. Position-level overrides keep their rules.
 
 ## Estimate and model
 
-- `price_estimate_from_model` prices a model; on ESTIMATE_STARTER_PACK_MISSING run
-  `install_construction_starter_pack`. Later quantity changes: an editable draft takes model quantities by itself
-  after each model change — report them from `get_estimate_model_changes` and acknowledge them with
-  `acknowledge_estimate_model_changes` once the user has seen them. Then `review_estimate_against_model` for the rest:
-  `apply_estimate_model_changes` after approval for remaining changes and new elements (re-run the review after a
-  rejection; use only `itemId` values and required `expectedModelVersion` equal to `modelVersion` from the latest review). SOURCE_REMOVED / QUANTITY_ZERO rows: keep with
-  `detach_estimate_items_from_model` or remove with `remove_estimate_items_with_missing_source` (`confirm=true`).
-  Accepting reported quantities only: prefer `apply_estimate_model_changes` over `replace_estimate_position`;
-  refreshing prices is not for quantity changes. Topic: "The estimate follows the model" in the service flow.
-- `skip_estimate_new_elements`: adding a skipped element later with `replace_estimate_position` clears the skip.
-- The review summary, coverage gaps and applicability issues match `get_estimate_checks`.
-- `set_primary_project_estimate`: `get_project_settlement` shows totals, plan vs actual and alerts for it.
+- `price_estimate_from_model`; on ESTIMATE_STARTER_PACK_MISSING run `install_construction_starter_pack`.
+- An editable draft takes model quantities itself: report `get_estimate_model_changes`, then
+  `acknowledge_estimate_model_changes` once seen. The rest via `review_estimate_against_model`:
+  `apply_estimate_model_changes` after approval (only `itemId` values and required `expectedModelVersion` =
+  `modelVersion` of the latest review; re-run the review after a rejection). SOURCE_REMOVED / QUANTITY_ZERO:
+  `detach_estimate_items_from_model` or `remove_estimate_items_with_missing_source` (`confirm=true`). For
+  reported quantities prefer `apply_estimate_model_changes` over `replace_estimate_position`; price refresh is
+  not for quantities. Topic: "The estimate follows the model".
+- `skip_estimate_new_elements`; adding a skipped element later with `replace_estimate_position` clears the skip.
+- Review summary, coverage gaps and applicability issues match `get_estimate_checks`.
+- `set_primary_project_estimate`: `get_project_settlement` shows its totals, plan vs actual and alerts.
 
 ## Offer and documents
 
-- Before sending, approval (`update_project_estimate` status APPROVED), or `generate_estimate_pdf`, read
-  `review_estimate_against_model`. Resolve `blockingPublicationItemIds`; warning consent cannot bypass them.
-  For `hasPublicationWarnings`, explain the findings and unacknowledged automatic quantity changes, then send
-  `confirmModelWarnings=true` only after the user agrees and preserve `modelVersion` as `expectedModelVersion`.
-  On `ESTIMATE_MODEL_REVIEW_STALE`, read and explain the new review and obtain a fresh decision.
-  See "Before sending, approving or generating a PDF" in the model-follow reference for refusal codes.
-- Before `send_estimate_offer` check `get_estimate_offer_workflow` (`canSend`) and `get_estimate_checks`; offer details
-  and the view used by the STANDARD PDF variant (`presentationMode` SIMPLE or DETAILED) are set with
-  `update_project_estimate`; `generate_estimate_pdf` follows it. `update_project_estimate` status changes do not send
-  the offer. The client's answer: `get_estimate_offer_workflow`. After a remark is ACCEPTED (`answer_estimate_offer_remark`),
-  change the estimate and send a new version.
-- OFFER_NUMBER_PATTERN_MISSING: set `numberPattern` with `update_company_offer_settings`. That tool clears omitted text
+- Before sending, approval (`update_project_estimate` status APPROVED) or `generate_estimate_pdf`: read
+  `review_estimate_against_model`, resolve `blockingPublicationItemIds` (warning consent cannot bypass them);
+  for `hasPublicationWarnings` explain the findings and unacknowledged automatic quantity changes, then send
+  `confirmModelWarnings=true` only after the user agrees, keeping
+  `modelVersion` as `expectedModelVersion`; on `ESTIMATE_MODEL_REVIEW_STALE` explain the new review and get a
+  fresh decision. Refusal codes: "Before sending, approving or generating a PDF" in the model-follow reference.
+- Before `send_estimate_offer` check `get_estimate_offer_workflow` (`canSend`) and `get_estimate_checks`. Offer
+  details and the STANDARD PDF view (`presentationMode` SIMPLE or DETAILED) are set with
+  `update_project_estimate`, whose status changes never send the offer; `generate_estimate_pdf` follows the
+  view. Client answer: `get_estimate_offer_workflow`. After a remark is ACCEPTED
+  (`answer_estimate_offer_remark`), change the estimate and send a new version.
+- OFFER_NUMBER_PATTERN_MISSING: set `numberPattern` with `update_company_offer_settings`; it clears omitted text
   fields, so read `get_company_offer_settings` first and send every field to keep.
-- As-built PDF: enter executed quantities with `update_estimate_sheet` (`actualQuantity`) before
+- As-built PDF: executed quantities via `update_estimate_sheet` (`actualQuantity`), then
   `generate_estimate_as_built_pdf`.
-- Excel: `export_estimate_excel` (`confirm=true`) stores the same XLSX as the app Excel button with the project documents
-  and replaces the previous export. To load a spreadsheet, upload it as a project document (`upload_document` or
-  `request_document_upload` + `complete_document_upload`) and send its id as `documentId` to `import_estimate_rows`
-  (`dryRun=true` first, `sheetName` for another sheet); the file must belong to the same project, reading it needs
-  `documents.read`, and an edited Kaldrix export loads back without a mapping. Saving the Excel needs `price-list.read`.
+- Excel: `export_estimate_excel` (`confirm=true`, needs `price-list.read`) stores the app's Excel-button XLSX
+  with the project documents, replacing the previous export. Import: upload a project document
+  (`upload_document` or `request_document_upload` + `complete_document_upload`), send its id as `documentId` to
+  `import_estimate_rows` (`dryRun=true` first, `sheetName` for another sheet); same project only, reading needs
+  `documents.read`, an edited Kaldrix export loads back without a mapping.

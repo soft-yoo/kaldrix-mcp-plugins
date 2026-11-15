@@ -1,8 +1,8 @@
 # Batch editing
 
-`apply_geometry_batch` accepts a typed `operations` object and edits one floor atomically. Its bounded groups mirror individually available tools: `labelRooms` (`label_room`, names/functions only), `updateWalls` (`update_wall`, without appearance), `updateSlabs` (`update_slab`, name/type/thickness/3D surface), `createPartitions` (`create_partition`, internal path/type/thickness), `createSlabs` (`create_slab`, standalone 3D surfaces/plain holes), and `removals`.
+`apply_geometry_batch` accepts a typed `operations` object and edits one floor atomically. Groups mirror individual tools: `labelRooms` (`label_room`, names/functions only), `updateWalls` (`update_wall`, without appearance), `updateSlabs` (`update_slab`, name/type/thickness/3D surface), `createPartitions` (`create_partition`, internal path/type/thickness), `createSlabs` (`create_slab`, standalone 3D surfaces/plain holes) and `removals`.
 
-Room labels and removals require `projects.delete` and `confirm=true`; wall/slab updates require `confirm=true`. Add-only batches remain available with `projects.write` and no confirmation. Ask the user to approve the described changes before setting this flag.
+Room labels and removals require `projects.delete` and `confirm=true`; wall/slab updates require `confirm=true`. Add-only batches need only `projects.write`, without confirmation. Get the user's approval of the described changes before setting the flag.
 
 Read the current tool schema for each entry. Example arguments:
 
@@ -21,8 +21,8 @@ Read the current tool schema for each entry. Example arguments:
 }
 ```
 
-`operationsJson` is no longer accepted. Raw installation routes, room dimensions and appearance changes are not batch operations. Use the individually exposed `update_installation_point` and `update_structural_member` for those elements; they are outside this batch. Unknown fields are rejected.
+`operationsJson` is no longer accepted; unknown fields are rejected. Raw installation routes, room dimensions and appearance changes are not batch operations: use the individual `update_installation_point` and `update_structural_member` for those elements.
 
-Removals accept only WALL, SLAB, INSTALLATION_POINT, STRUCTURAL_MEMBER, FRAMING_SYSTEM and INSTALLATION_CIRCUIT, corresponding to their registered removal tools. They require `projects.delete` and `confirm=true` after the user approves the complete effect. Removing a wall also removes its openings and attached routes; removing a roof slab removes its roof assembly. Read the tool descriptions for cascades. A stale `expectedModelVersion` or invalid operation rejects the whole batch.
+Removals accept only WALL, SLAB, INSTALLATION_POINT, STRUCTURAL_MEMBER, FRAMING_SYSTEM and INSTALLATION_CIRCUIT, matching their registered removal tools, and require `projects.delete` and `confirm=true` after the user approves the complete effect. Removing a wall also removes its openings and attached routes; removing a roof slab removes its roof assembly (see tool descriptions for cascades). A stale `expectedModelVersion` or invalid operation rejects the whole batch.
 
-Use outline tools for building footprints. After mutation, re-read `get_floor_detail` for derived room IDs and the current modelVersion. Label derived rooms with `label_room`. Retry with the same input and idempotency key; do not substitute a fresh model version into a previously reviewed edit.
+Use outline tools for building footprints. After the mutation, re-read `get_floor_detail` for derived room IDs and the current modelVersion; label derived rooms with `label_room`. Retry with the same input and idempotency key; never substitute a fresh model version into a previously reviewed edit.

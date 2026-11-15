@@ -1,9 +1,8 @@
 ## Sockets and water in a kitchen
 
-1. `get_floor_detail` → find the kitchen `spaceId` and its outline, and the wall behind the worktop.
-2. `add_installation_points` with one call for the whole kitchen (1–200 points, atomic). For wall kinds set
-   `wallId` and a plan point on the room side of the wall — the backend projects it onto the wall face and
-   derives the facing:
+1. `get_floor_detail` → kitchen `spaceId`, its outline and the wall behind the worktop.
+2. `add_installation_points`, one call for the whole kitchen (1–200 points, atomic). Wall kinds: set `wallId` and a
+   plan point on the room side — the backend projects it onto the wall face and derives the facing:
 
 ```json
 {"points":[
@@ -18,9 +17,8 @@
 ]}
 ```
 
-   Omit `height` for the kind default (sockets 0.30 m, switches 1.10 m, ceiling kinds at the ceiling or the
-   room's suspended ceiling). Without `wallId` a wall within 0.5 m is attached automatically.
-3. `list_installation_points` to read back the snapped positions and `countsByKind`.
-4. Move or change a point with `update_installation_point` (`pointIds` applies the same height, label or kind to
-   several points at once); copy points to another storey with `copy_to_floor`; delete with `remove_installation_points`
-   (`confirm=true`, `projects.delete`).
+   Omit `height` for the kind default (sockets 0.30 m, switches 1.10 m, ceiling kinds at the ceiling or the room's
+   suspended ceiling). Without `wallId` a wall within 0.5 m is attached automatically.
+3. `list_installation_points` → snapped positions and `countsByKind`.
+4. `update_installation_point` moves/changes a point (`pointIds` applies one height, label or kind to several);
+   `copy_to_floor` copies to another storey; `remove_installation_points` deletes (`confirm=true`, `projects.delete`).

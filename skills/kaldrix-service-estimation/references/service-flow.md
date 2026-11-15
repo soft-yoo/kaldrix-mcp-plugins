@@ -1,8 +1,7 @@
 # Service flow: topic index
 
-Choose only the topic needed for the current task. These fragments are the source
-of the complete server guide; do not read them all before a routine operation.
-Use live tool schemas and backend decisions for the actual operation.
+Read only the topic for the current task; together the fragments form the complete server
+guide. Live tool schemas and backend decisions govern the actual operation.
 
 - [Simple Estimation Flow for Agents](service-flow-00-simple-estimation-flow-for-agents.md)
 - [Five Documents](service-flow-01-five-documents.md)

@@ -5,46 +5,37 @@ description: Use when creating or changing Kaldrix service recipes, price lists,
 
 # Estimate with the backend's current rules
 
-Use current MCP schemas and backend results for prices, quantities, units,
-currency, VAT, totals, scope, readiness and available actions. Never reproduce
-the pricing engine or infer a hidden amount. Inspect the selected estimate,
-its status, project/building scope and the person's cost visibility first.
+Use current MCP schemas and backend results for prices, quantities, units, currency, VAT, totals,
+scope, readiness and available actions. Never reproduce the pricing engine or infer a hidden amount.
+First inspect the selected estimate, its status, project/building scope and the person's cost visibility.
 
-Use the [service estimation topic index](references/service-flow.md) to choose
-only the fragment for the current task: catalogue/recipe setup, quantity mapping,
-estimate editing, model scope proposals, offer lifecycle, PDF or reports. Read
-another fragment only when reaching that step or when returned data requires it.
-The index assembles into the complete server guide; reading all fragments is
-unnecessary for a single position or price-list change.
+From the [service estimation topic index](references/service-flow.md) read only the fragment for the
+current task (catalogue/recipe setup, quantity mapping, estimate editing, model scope proposals, offer
+lifecycle, PDF, reports); read another one when reaching that step or when returned data requires it.
+The fragments assemble into the complete server guide; a single position or price-list change does not
+need all of them. Input sources and the next tool: [tool order and inputs](references/tool-order-and-inputs.md).
 
-For where an input comes from or which tool comes next, read
-[tool order and inputs](references/tool-order-and-inputs.md).
+- Categories, markup rules, quantity rules and live tool schemas are server contracts: fetch the compact
+  resource when needed instead of a copied enum or your own calculation.
+- Keep project, estimate, recipe and position identities distinct. Preserve the selected building scope,
+  source provenance, reviewed versions and retry keys.
+- Explain preview changes before applying them. An approved estimate is frozen; follow the backend's
+  supported change workflow. An editable draft takes model quantity changes by itself after each model
+  change; read [the estimate follows the model](references/service-flow-30-estimate-follows-the-model.md)
+  before applying model changes yourself.
+- Sending an offer, approving it or recording a payment requires the user's actual decision and any
+  confirmation declared by the tool. A request to review does not authorize a write.
+- Replacing saved estimate settings, rows, scopes, prices, recipe composition or generated PDFs also
+  requires explicit confirmation in the current schemas. Scope replacement or a manual quantity/formula
+  requires estimates.delete and confirm=true; append-only scope assignment stays on estimates.write.
+- `set_estimate_discount` and `update_estimation_item` require both `estimates.write` and
+  `estimates.delete`; `update_catalog_resource` requires `catalog.write` and `catalog.delete`. Review the
+  replacement or clearing of saved data with the user, then set `confirm=true`, including for the first
+  save through these tools.
+- Read back saved changes and the backend checks; distinguish warnings, missing scope and a failed check
+  from successful readiness.
 
-Backend-generated categories, markup rules, quantity rules and live tool schemas
-remain server contracts. Fetch the relevant compact resource when needed rather
-than relying on a copied enum or writing another calculation. Keep returned
-project, estimate, recipe and position identities distinct. Preserve the
-selected building scope and source provenance, reviewed versions and retry keys.
-
-Explain preview changes before applying them. An approved estimate is frozen;
-follow the backend's supported change workflow. An editable draft takes model
-quantity changes by itself after each model change; read
-[the estimate follows the model](references/service-flow-30-estimate-follows-the-model.md)
-before applying model changes yourself. Sending an offer, approving it
-or recording a payment requires the user's actual decision and any confirmation
-declared by the tool. A request to review does not authorize a write.
-Replacing saved estimate settings, rows, scopes, prices, recipe composition or
-generated PDFs also requires explicit confirmation in the current schemas.
-Scope replacement or a manual quantity/formula requires estimates.delete and
-confirm=true; append-only scope assignment stays on estimates.write.
-`set_estimate_discount` and `update_estimation_item` require both `estimates.write`
-and `estimates.delete`; `update_catalog_resource` requires `catalog.write` and
-`catalog.delete`. Review the replacement or clearing of saved data with the user,
-then set `confirm=true`, including for the first save through these tools.
-Read back saved changes and the backend checks; distinguish warnings, missing
-scope and a failed check from successful readiness.
-
-Without this skill, read `kaldrix://estimation/service-flow` through
-`resources/read` or `describe_kaldrix_mcp(resourceUri=URI)` on demand. Use the full
-fallback if the installed reference conflicts with current schemas or lacks a
-topic. Never automatically fetch the complete guide before every estimate write.
+Without this skill, read `kaldrix://estimation/service-flow` through `resources/read` or
+`describe_kaldrix_mcp(resourceUri=URI)` on demand. Use the full fallback if the installed reference
+conflicts with current schemas or lacks a topic. Never automatically fetch the complete guide before
+every estimate write.
