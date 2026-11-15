@@ -9,9 +9,9 @@ tool comes next. Live schemas, `nextTools` and `fixTools` in results stay author
   `create_building_floor`, rename or add buildings with `save_project_building`, change project parts later with
   `set_project_parts`. `PROJECT_CREATE_FORBIDDEN` is final; do not retry.
 - `duplicate_project`: check `get_projects` first so the copy gets a unique name.
-- `create_building_floor`: set the building outline first. Use `set_floor_outline` only when a storey needs another
-  footprint. In a project with several buildings, send the building id explicitly. The auto-created attic roof is
-  changed with `update_roof`; an attic roof space is set with `set_floor_roof_space`.
+- Floors: set the outline first; send the intended building id. `set_floor_outline` changes a storey's footprint.
+  `create_building_floor` / `update_floor` height intents and `label_room` AUTO/own ceiling rules:
+  [geometry guide](geometry-guide.md#floor-and-room-heights). Attic tools: `update_roof`, `set_floor_roof_space`.
 - After `set_building_outline` or `move_building`, read `get_project_detail`.
 - `buildingId` comes from `get_project_detail`. Project parts: `get_project_part_catalog` together with
   `get_project_detail` `activeParts` and `set_project_parts`.

@@ -17,6 +17,8 @@ retain existing model data; see [plan and module access](plan-and-module-access.
    roof, the slab sits between them and the eaves overhang must be 0. Other kinds refuse it (`BIM_ROOF_PARAPET_*`).
    A raised wall keeps its height (`BIM_ROOF_PARAPET_WALL_LOCKED`): change `parapetHeight` with `update_roof`.
    Rooms do not define the roof. Retain `roofAssemblyId`; `list_structures` also lists roof assemblies.
+   Do not remove a wall created or adjusted by a roof on its own, even with the ROOF part disabled:
+   `BIM_ROOF_WALL_MANAGED_BY_ASSEMBLY` requires removing the whole roof first.
 2. `preview_framing_system` with `kind = ROOF_RAFTERS` (and `roofAssemblyId` when the floor has several roofs).
    Read the current defaults and inspect the preview before choosing sections, spacing and supports.
    Wall plates, collar ties and an optional ridge beam are parametric. Roof battening includes
@@ -54,3 +56,8 @@ Only use `explode_framing_system` when the user explicitly requests conversion t
 It turns a system into plain structural members for manual editing; it removes the
 system and its fixings, connectors, boards and FRAMING_* quantities, so it needs `confirm=true` and
 `projects.delete`. `remove_framing_system` deletes the system.
+
+`get_element` framing references may target `ROOF_ASSEMBLY` metadata, not a kind accepted by `list_elements`.
+Inspect roof assemblies with `list_structures`. Missing purlin or wall-plate faces remain flagged settings:
+review and correct the support plan. A converted installation circuit no longer exists; its lines keep their
+geometry and point links, but do not retain a historical `circuitId`. Deleted point links are cleared.

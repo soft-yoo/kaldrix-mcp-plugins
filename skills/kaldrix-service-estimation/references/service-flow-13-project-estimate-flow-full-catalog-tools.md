@@ -6,8 +6,10 @@ The steps below use lower-level tools from the same `workspace` catalog. For a s
 For an RMS estimate choose `kind=RESOURCES` when creating it. Read `kind` and `resourceMarkups` on the estimate.
 Only LABOR, MATERIAL and EQUIPMENT rows are allowed; services are refused with `ESTIMATE_KIND_SERVICES_NOT_ALLOWED`.
 For a RESOURCES row send the net **purchase** price as `purchasePriceNet`; the server applies the resource markup and
-returns the sale price as `unitPriceNet`. Do not add the markup yourself. Outside RESOURCES, `unitPriceNet` is the sale
-price. Change estimate markup rules with `update_project_estimate` after user confirmation. Purchase prices and
+returns the sale price as `unitPriceNet`. This applies to `create_estimation_item`, `update_estimation_item`, and
+`update_estimate_sheet`: in RESOURCES, price changes through `unitPriceNet` are rejected. Do not add the markup
+yourself or send a sale price as the purchase price. Outside RESOURCES, `unitPriceNet` is the sale price; typing it
+preserves the stored purchase price. Change estimate markup rules with `update_project_estimate` after user confirmation. Purchase prices and
 resource markups are hidden without access to costs; never infer them from the sale price.
 
 1. Call `list_project_estimates` with the project UUID.
@@ -48,7 +50,11 @@ resource markups are hidden without access to costs; never infer them from the s
 8. Move the estimate through its lifecycle with `update_project_estimate` (omitted fields stay unchanged; every call
    needs `confirm=true` after the user approves, approval also freezes the estimate) and point at the binding one with
    `set_primary_project_estimate`. The same update tool can set an internal contingency reserve and ordered purchase,
-   indirect-cost, and profit rules. Read `kaldrix://estimation/markup-rules` before replacing those rules. VAT is
+   indirect-cost, and profit rules. A non-empty header list must include `PURCHASE_COSTS`, `INDIRECT_COSTS`, and `PROFIT`,
+   including zero-percent stages; incomplete lists are rejected. `[]` clears header rules, while omitted/null rules
+   keep the current list. Legacy percent patches are valid only if the resulting header is complete. Position-level
+   overrides keep their existing semantics. The default profit basis includes labor, materials, equipment, purchase
+   costs, and indirect costs. Read `kaldrix://estimation/markup-rules` before replacing those rules. VAT is
    stored per row (`vatRate`); gross = net × (1 + VAT) is calculated by the server.
 9. Remove a position with `remove_estimate_position` (any row id or the `serviceOccurrenceId`): a service goes with all
    of its scopes, an own position as one row. It requires explicit confirmation.
@@ -61,14 +67,14 @@ frozen entirely; compare the saved and the current model version and ask the use
 "The estimate follows the model".
 
 `review_estimate_against_model` answers which rows still do not match the project (in a draft, usually only
-removed and new elements remain). It reports every project-linked row whose element changed its quantity
-(`QUANTITY_CHANGED`) or disappeared (`SOURCE_REMOVED`), rows whose service is gone from the price list
+removed and new elements, or rows affected by a calculation-method update, remain). It returns `modelVersion`, `quantityEngineVersion`, and every project-linked row whose quantity changed
+(`QUANTITY_CHANGED`, with `changeReason`: `MODEL_CHANGED` when the drawing changed or `CALCULATION_CHANGED` with `notice` when Kaldrix's calculation method changed while the drawing may be unchanged) or whose element disappeared (`SOURCE_REMOVED`), rows whose service is gone from the price list
 (`SERVICE_REMOVED`), the net amount those differences would add or
 remove, and the rooms no row points at yet — a room counts as priced when a row points at it or at one of its
 walls, slabs, or openings. Each row is measured with the quantity rule it was frozen with (a saved measurement in its
 frozen `sourceUnit`), even if the service's rule or unit has changed since. A row whose element has no data for its
 stored rule is reported as `QUANTITY_RULE_UNKNOWN` instead of being compared in another measure;
-`apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion`) skips it, so re-add the service or correct its scopes.
+`apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion` and `expectedQuantityEngineVersion` from `quantityEngineVersion`) skips it, so re-add the service or correct its scopes.
 It also lists `newElements`: positions measured from installations, installation points, structural members or
 framing systems for which the model has matching elements that are not their scopes yet (e.g. a socket drawn after
 pricing). New automatic stage positions search the estimate's allowed building/project scope, including ordinary
@@ -76,7 +82,7 @@ walls, slabs and rooms qualified by their original stage and work section. Older
 the existing floor heuristic and conservative source types. A manual scope replacement or assignment, even when only
 removing a scope, ends automatic stage coverage for that position. The review itself writes nothing and never refreshes
 frozen amounts. After the user
-approves, call `apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion`): omit both lists to apply everything (changed rows and new elements),
+approves, call `apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion` and required `expectedQuantityEngineVersion` from `quantityEngineVersion`, so a model edit or calculation-method bump refuses a stale apply with `ESTIMATE_MODEL_REVIEW_STALE`): omit both lists to apply everything (changed rows and new elements),
 or set `itemIds` (changed rows) and/or `addNewElementsTo` (`serviceOccurrenceId` of positions to extend) — a list
 that is omitted while the other is given means "none of these". It keeps each row's multiplier and id, adds each new
 element as its own scope and reprices the whole service occurrence. When a new element deliberately does not belong

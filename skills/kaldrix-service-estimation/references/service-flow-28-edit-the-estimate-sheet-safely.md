@@ -21,9 +21,15 @@ for one manual scope. To change a linked quantity or the planned quantity of a m
 position, edit its scopes instead. Components in the read result are per-scope quantities;
 a replacement `components` list describes the whole service occurrence. Use the component's
 unit; no implicit unit conversion is performed. Omit a field to retain it, and use explicit
-clear flags for completed quantity, manual order or section. For price mode use `CUSTOM`
-(manual selling price) or `COMPOSITION` (the common backend calculator). Keep user-entered
-names, KNR codes and cell texts in their original language.
+clear flags for completed quantity, manual order or section. Service rows use `CUSTOM`
+(manual net selling price) or `COMPOSITION` (the backend composition calculator).
+Keep user-entered names, KNR codes and cell texts in their original language.
+
+For an own LABOR, MATERIAL or EQUIPMENT row in a RESOURCES estimate, change its net purchase
+price with `purchasePriceNet`. A price change through `unitPriceNet` is rejected. The backend
+applies the estimate's resource markup and returns the selling price as `unitPriceNet`.
+Do not add the markup yourself or send the returned selling price as the purchase price.
+Outside RESOURCES, `unitPriceNet` is the net selling price; typing it keeps the stored purchase price.
 
 This tool edits existing positions only. It does not copy or deactivate positions.
 After a conflict or an uncertain network result, read the current rows before a new edit.

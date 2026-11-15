@@ -36,9 +36,14 @@ tool comes next. Live schemas, `nextTools` and `fixTools` in results stay author
 - Reading rows: `list_estimate_sheet_rows` right before `update_estimate_sheet` (exact row versions). Read-only review,
   filters, VAT, sections, discounts, options and `serviceOccurrenceId` for `replace_estimate_position` /
   `remove_estimate_position`: `list_estimation_items`.
+- RMS (`kind=RESOURCES`): send the net purchase price as `purchasePriceNet`, including in `update_estimate_sheet`.
+  `unitPriceNet` is the returned sale price and is rejected as a price input in RMS; never add the markup yourself.
 - Discounts: markup after discount is in `list_estimation_items`; position discounts are set with
   `update_estimate_sheet`. Options: `save_estimate_option_groups`, then `set_estimate_position_option`.
 - Markup rules and their cost bases: read `kaldrix://estimation/markup-rules` before changing them.
+  For the estimate header, send all `PURCHASE_COSTS`, `INDIRECT_COSTS`, and `PROFIT` stages, keeping zero-percent
+  stages, or `[]` to clear the header. Omitted/null rules keep the current list; incomplete lists are rejected.
+  Legacy percent patches must also leave a complete header. Position-level overrides retain their own rules.
 
 ## Estimate and model
 
