@@ -68,7 +68,7 @@ remove, and the rooms no row points at yet — a room counts as priced when a ro
 walls, slabs, or openings. Each row is measured with the quantity rule it was frozen with (a saved measurement in its
 frozen `sourceUnit`), even if the service's rule or unit has changed since. A row whose element has no data for its
 stored rule is reported as `QUANTITY_RULE_UNKNOWN` instead of being compared in another measure;
-`apply_estimate_model_changes` skips it, so re-add the service or correct its scopes.
+`apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion`) skips it, so re-add the service or correct its scopes.
 It also lists `newElements`: positions measured from installations, installation points, structural members or
 framing systems for which the model has matching elements that are not their scopes yet (e.g. a socket drawn after
 pricing). New automatic stage positions search the estimate's allowed building/project scope, including ordinary
@@ -76,7 +76,7 @@ walls, slabs and rooms qualified by their original stage and work section. Older
 the existing floor heuristic and conservative source types. A manual scope replacement or assignment, even when only
 removing a scope, ends automatic stage coverage for that position. The review itself writes nothing and never refreshes
 frozen amounts. After the user
-approves, call `apply_estimate_model_changes`: omit both lists to apply everything (changed rows and new elements),
+approves, call `apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion`): omit both lists to apply everything (changed rows and new elements),
 or set `itemIds` (changed rows) and/or `addNewElementsTo` (`serviceOccurrenceId` of positions to extend) — a list
 that is omitted while the other is given means "none of these". It keeps each row's multiplier and id, adds each new
 element as its own scope and reprices the whole service occurrence. When a new element deliberately does not belong
@@ -91,7 +91,7 @@ missing room with `quick_add_estimate_position` + `assign_estimate_position_scop
 The review also lists `doubleCounted` (`doubleCountedCount`): groups of positions that take the same quantity from the
 same model element (same measure, e.g. `FRAMING_ROLE_VOLUME` + `RAFTER`) and share a material or component — typically
 a whole-system service ("Więźba dachowa — całość (zamiast osobnych pozycji)") next to per-role services ("Krokwie —
-drewno C24", "Murłata"). It is a separate finding: it does not change `changedCount` and `apply_estimate_model_changes`
+drewno C24", "Murłata"). It is a separate finding: it does not change `changedCount` and `apply_estimate_model_changes` (required `expectedModelVersion` from the review's `modelVersion`)
 does not touch it. Show the group (positions, `overlapQuantity`, `overlapNet`, `sharedResources`) and follow
 `suggestedAction`: `REMOVE_ONE` — remove `coveringServiceOccurrenceId` or the others with
 `remove_estimate_position` (user's approval); `NARROW_FILTER` — narrow `elementSubtypes` of one service

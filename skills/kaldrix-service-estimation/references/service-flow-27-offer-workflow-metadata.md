@@ -56,7 +56,7 @@ with all matching active services of the estimate price list, using the same rul
 skipped. Unpriced sources of an existing service get a new complementary position; `addedCount` counts actual new
 positions. Stage pricing keeps existing rows, quantities and prices. Later model changes correct model quantities of
 an editable draft in the background ("The estimate follows the model"); in other estimates review them with
-`review_estimate_against_model` and accept them explicitly with `apply_estimate_model_changes`. Every model quantity is priced once, by the same rule as the review's `doubleCounted`: a whole-system
+`review_estimate_against_model` and accept them explicitly with `apply_estimate_model_changes` and the review's `modelVersion` as required `expectedModelVersion`. Every model quantity is priced once, by the same rule as the review's `doubleCounted`: a whole-system
 service ("Więźba dachowa — całość (zamiast osobnych pozycji)") and per-member services counting the same timber
 ("Krokwie", "Murłata", "Jętki") are never added together — the per-member services win when together they cover the
 whole system, otherwise the whole-system service is added alone. An existing alternative blocks overlapping services

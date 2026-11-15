@@ -27,18 +27,39 @@ After editing the model:
 2. `get_estimate_model_changes` → tell the user what changed: positions with quantity before and after, the cause
    ("Model change" or "After a version was restored") and who changed or restored the model. Net values before and after are null without `price-list.read` consent or for a person
    outside the company team.
-3. Handle what is left with the user, using `itemId` values from the latest review:
+3. Handle what is left with the user, using `itemId` values and `modelVersion` from the latest review:
    - keep a position whose element is gone, with its current quantity as a manual quantity:
      `detach_estimate_items_from_model` (`estimates.write`);
    - remove such positions: `remove_estimate_items_with_missing_source` (`estimates.delete`, `confirm=true` after the
      user approves);
-   - new elements: add them with `apply_estimate_model_changes` (`addNewElementsTo`) or skip them with
+   - new elements: add them with `apply_estimate_model_changes` (`addNewElementsTo`, required `expectedModelVersion` from the review) or skip them with
      `skip_estimate_new_elements`;
    - remaining `QUANTITY_CHANGED` rows in a draft (quantities the backend does not correct itself): `apply_estimate_model_changes`
-     with `itemIds`, after approval.
+     with `itemIds` and the review's `modelVersion` as `expectedModelVersion`, after approval.
 4. When the user has seen the entries, `acknowledge_estimate_model_changes` with their `entryIds` removes them from
    the attention summary. It changes no amount or quantity.
 
 A row id from an older review can be rejected with a validation error (`ESTIMATE_MODEL_SOURCE_PRESENT` or a stale
 `itemId`) because the background already handled it: read the review again and use its current ids. Detaching and
 removing work only in an editable estimate.
+
+## Before sending, approving or generating a PDF
+
+Read `review_estimate_against_model` immediately before `send_estimate_offer`,
+`update_project_estimate` with status APPROVED, or `generate_estimate_pdf`. Show its actual
+findings and any unacknowledged automatic changes from `get_estimate_model_changes` to the user.
+Use `blockingPublicationItemIds` and `hasPublicationWarnings` from the backend; do not derive
+publication decisions from counters or cached attention badges.
+
+- Non-empty `blockingPublicationItemIds` means removed or zero-quantity model sources. Correct,
+  remove or detach these rows first. `ESTIMATE_MODEL_SOURCES_INVALID` cannot be overridden.
+- Other model warnings or unacknowledged automatic quantity changes require the user's explicit
+  acceptance. Only then send `confirmModelWarnings=true` and that review's `modelVersion` as
+  `expectedModelVersion` on the intended send, approval or PDF call. Keep the ordinary `confirm=true`
+  consent for that action as well. Omitting warning consent gives `ESTIMATE_MODEL_WARNINGS_UNCONFIRMED`.
+- A missing version with warning consent, or a changed model, gives `ESTIMATE_MODEL_REVIEW_STALE`.
+  Read and explain the new review, then ask for a new decision. Never replace the version in a previously
+  approved request with a newer number, retry silently, or treat `confirm=true` as warning consent.
+
+The backend rechecks the model for each operation. Confirmation accepts the reviewed warnings for
+that operation; it does not remove the findings or acknowledge change-history entries.
